@@ -23,13 +23,12 @@ const { title, description = 'Purity & Void Engineering Blog' } = Astro.props;
   </head>
   <body>
     <SkipLink />
-    <Header />
-    <main
-      id="main"
-      style="flex: 1; width: 100%; max-width: 800px; margin: 0 auto; padding: 0 2rem;"
-    >
-      <slot />
-    </main>
-    <Footer />
+    <div class="structural-spine">
+      <Header />
+      <main id="main" style="flex: 1; width: 100%;">
+        <slot />
+      </main>
+      <Footer />
+    </div>
   </body>
 </html>

@@ -2,7 +2,7 @@
   --bg-void: #fcfcfa;
   --text-primary: #1a1a1a;
   --text-muted: #595959;
-  --accent-action: #e60012;
+  --accent-action: #C10016;
   --code-bg: #f0f0ee;
   --code-line-num: #767676;
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
@@ -26,15 +26,25 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 
-body {
+.structural-spine {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  border-left: 4px solid var(--accent-action);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+
 }
 
 :focus-visible {
   outline: 2px solid var(--accent-action);
   outline-offset: 4px;
+}
+
+.site-title {
+  display: inline-block;
+  line-height: 1.2;
 }
 
 .skip-link {
