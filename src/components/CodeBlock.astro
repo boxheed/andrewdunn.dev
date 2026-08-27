@@ -1,0 +1,72 @@
+---
+// CodeBlock.astro
+interface Props {
+  language?: string;
+  code: string;
+}
+
+const { language, code } = Astro.props;
+---
+
+<div class="code-block-wrapper" style="position: relative; margin: 2rem 0;">
+  <div class="sr-only" aria-live="polite" id="copy-status"></div>
+  <button
+    class="copy-btn"
+    aria-label="Copy code to clipboard"
+    style="position: absolute; top: 0.5rem; right: 0.5rem; background: var(--bg-void); border: 1px solid var(--text-muted); padding: 0.25rem 0.5rem; cursor: pointer;"
+  >
+    Copy
+  </button>
+  <div aria-label={`Code block in ${language || 'text'}`}>
+    <slot />
+  </div>
+</div>
+
+<script>
+  const wrappers = document.querySelectorAll('.code-block-wrapper');
+
+  wrappers.forEach((wrapper) => {
+    const copyBtn = wrapper.querySelector('.copy-btn');
+    const statusEl = wrapper.querySelector('#copy-status');
+    const pre = wrapper.querySelector('pre');
+
+    if (copyBtn && pre && statusEl) {
+      copyBtn.addEventListener('click', async () => {
+        try {
+          // The spec implies getting the text content of the pre element
+          const text = pre.textContent || '';
+          await navigator.clipboard.writeText(text);
+
+          if (copyBtn instanceof HTMLElement) {
+            copyBtn.textContent = 'Copied!';
+            statusEl.textContent = 'Code copied to clipboard';
+            setTimeout(() => {
+              copyBtn.textContent = 'Copy';
+              statusEl.textContent = '';
+            }, 2000);
+          }
+        } catch (err) {
+          console.error('Failed to copy text: ', err);
+          if (copyBtn instanceof HTMLElement) {
+            copyBtn.textContent = 'Failed';
+            statusEl.textContent = 'Failed to copy code';
+          }
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+</style>

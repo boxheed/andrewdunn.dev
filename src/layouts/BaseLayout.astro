@@ -1,0 +1,35 @@
+---
+// BaseLayout.astro
+import '../styles/global.css';
+import SkipLink from '../components/SkipLink.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Purity & Void Engineering Blog' } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <SkipLink />
+    <Header />
+    <main
+      id="main"
+      style="flex: 1; width: 100%; max-width: 800px; margin: 0 auto; padding: 0 2rem;"
+    >
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

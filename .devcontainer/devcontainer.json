@@ -1,54 +1,55 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node
 {
-	"name": "Local Dev",
-	"dockerFile": "Dockerfile",
-	"workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=delegated",
-	"workspaceFolder": "/workspace",
-	"remoteUser": "vscode",
-	"mounts": [
-		"source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
-		"source=${localEnv:USERPROFILE}/.aws,target=/home/vscode/.aws,type=bind,consistency=cached",
-		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
-	],
-    
-	
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"oracle.oracle-java",
-				"aaron-bond.better-comments",
-				"esbenp.prettier-vscode",
-				"mwpb.java-prettier-formatter",
-				"eamodio.gitlens",
-				"pkief.material-icon-theme",
-				"astro-build.astro-vscode"
-			],
-			"settings": {
-				"terminal.integrated.shell.linux": "/bin/bash"
-			}
-		}
-	},
-	
+  "name": "Local Dev",
+  "dockerFile": "Dockerfile",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=delegated",
+  "workspaceFolder": "/workspace",
+  "remoteUser": "vscode",
+  "mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
+    "source=${localEnv:USERPROFILE}/.aws,target=/home/vscode/.aws,type=bind,consistency=cached",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
+  ],
 
-	
-	"containerEnv": {"CHOKIDAR_USEPOLLING": "true", "HOST_USERNAME": "${localEnv:USERNAME}", "HOST_USERPROFILE": "${localEnv:USERPROFILE" },
-	"postStartCommand": "for folder in ${containerWorkspaceFolder}/*; do git config --global --add safe.directory $folder; done && sudo chown -R vscode:vscode ~/.ssh && chmod 700 ~/.ssh && chmod 600 ~/.ssh/*"
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	//"image": "mcr.microsoft.com/devcontainers/javascript-node:0-16"
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "oracle.oracle-java",
+        "aaron-bond.better-comments",
+        "esbenp.prettier-vscode",
+        "mwpb.java-prettier-formatter",
+        "eamodio.gitlens",
+        "pkief.material-icon-theme",
+        "astro-build.astro-vscode"
+      ],
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+      }
+    }
+  },
 
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
+  "containerEnv": {
+    "CHOKIDAR_USEPOLLING": "true",
+    "HOST_USERNAME": "${localEnv:USERNAME}",
+    "HOST_USERPROFILE": "${localEnv:USERPROFILE"
+  },
+  "postStartCommand": "for folder in ${containerWorkspaceFolder}/*; do git config --global --add safe.directory $folder; done && sudo chown -R vscode:vscode ~/.ssh && chmod 700 ~/.ssh && chmod 600 ~/.ssh/*"
+  // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+  //"image": "mcr.microsoft.com/devcontainers/javascript-node:0-16"
 
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
+  // Features to add to the dev container. More info: https://containers.dev/features.
+  // "features": {},
 
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "yarn install",
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": [],
 
-	// Configure tool-specific properties.
-	// "customizations": {},
+  // Use 'postCreateCommand' to run commands after the container is created.
+  // "postCreateCommand": "yarn install",
 
-	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+  // Configure tool-specific properties.
+  // "customizations": {},
+
+  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+  // "remoteUser": "root"
 }

@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostPreview from '../components/PostPreview.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<BaseLayout title="Purity & Void">
+  <h1 class="hero-title" style="margin-top: 64px; margin-bottom: 96px;">Void.</h1>
+  <div class="posts">
+    {posts.map((post) => (
+      <PostPreview title={post.data.title} date={post.data.date} slug={post.id} />
+    ))}
+  </div>
+</BaseLayout>
