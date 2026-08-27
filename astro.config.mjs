@@ -5,7 +5,7 @@ export default defineConfig({
   site: 'https://example.com',
   integrations: [sitemap()],
   server: {
-    host: true
+    host: true,
   },
   markdown: {
     shikiConfig: {
@@ -22,7 +22,13 @@ export default defineConfig({
             settings: { foreground: '#767676', fontStyle: 'italic' },
           },
           {
-            scope: ['keyword', 'storage', 'variable.language', 'entity.name.function', 'support.function'],
+            scope: [
+              'keyword',
+              'storage',
+              'variable.language',
+              'entity.name.function',
+              'support.function',
+            ],
             settings: { fontStyle: 'bold', foreground: '#1A1A1A' },
           },
           {
