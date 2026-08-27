@@ -59,7 +59,7 @@
 
 - **Metadata**: Accessible `aria-label` declaring the language; copy-to-clipboard functionality with explicit screen-reader status announcements.
 
-## File & Directory Structure
+## 5. File & Directory Structure
 
 ```
 ├── public/
@@ -174,3 +174,13 @@ pre {
   border-radius: 0;
 }
 ```
+
+## 7. Project Governance & Tooling
+The agent must install and configure the following infrastructure for repository governance:
+
+- **Code Formatting:** Install `prettier` and `prettier-plugin-astro`. Create a `.prettierrc` enforcing single quotes, trailing commas, and a print width of 100.
+- **Linting:** Install `eslint` and `eslint-plugin-astro`. Create a base configuration that catches unused variables and accessibility (a11y) violations.
+- **Commit Standards:** Install `husky` and `@commitlint/config-conventional`. 
+  - Configure a `commit-msg` hook to strictly enforce Conventional Commits.
+  - Configure a `pre-commit` hook to run Prettier and ESLint against staged files.
+- **Node Engine:** Add an `.nvmrc` file specifying Node v20+ and define `engine` constraints in `package.json`.
