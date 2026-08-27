@@ -4,7 +4,7 @@
 - **Framework:** Astro 5.x (SSG mode, zero client-side JavaScript default).
 - **Target Platform:** Cloudflare Pages (`@astrojs/cloudflare` adapter optional for SSR, static export default).
 - **Content Engine:** Astro Content Collections (`src/content/blog/`) parsing Markdown/MDX with frontmatter validation (Zod).
-- **Styling Architecture:** Modern CSS custom properties with Tailwind CSS or vanilla modern CSS (fluid typography via `clamp()`, grid, flexbox).
+- **Styling Architecture:** Only use vnilla modern CSS (fluid typography via `clamp()`, grid, flexbox).
 
 ---
 
@@ -53,11 +53,15 @@
 4. **Fluid Zoom:** Must scale up to 200% zoom without horizontal scrolling or text clipping.
 
 ## 4. Code Block Specification
-- **Engine:** Shiki / Astro built-in syntax highlighter.
+- **Engine:** Shiki / Astro built-in syntax highlighter. The custom Shiki theme must be explicitly defined in astro.config.mjs using the markdown.shikiConfig object.
+
 - **Theme:** Minimal dual-tone or monochromatic high-contrast theme (dark charcoal tokens with subtle red/cyan accents).
+
 - **Architecture:** Embedded within #F0F0EE container, borderless, inset padding 1.5rem.
 
 - **Metadata**: Accessible `aria-label` declaring the language; copy-to-clipboard functionality with explicit screen-reader status announcements.
+
+- **Exception to zero-JS rule:** The CodeBlock.astro component must include a scoped vanilla `<script>` to handle the clipboard API and aria-live region announcements.
 
 ## 5. File & Directory Structure
 
@@ -184,3 +188,4 @@ The agent must install and configure the following infrastructure for repository
   - Configure a `commit-msg` hook to strictly enforce Conventional Commits.
   - Configure a `pre-commit` hook to run Prettier and ESLint against staged files.
 - **Node Engine:** Add an `.nvmrc` file specifying Node v20+ and define `engine` constraints in `package.json`.
+- **Sitemap:** Add `@astrojs/sitemap` add the integration to `astro.config.mjs`.
