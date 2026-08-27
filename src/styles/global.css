@@ -2,7 +2,7 @@
   --bg-void: #fcfcfa;
   --text-primary: #1a1a1a;
   --text-muted: #595959;
-  --accent-action: #C10016;
+  --accent-action: #c10016;
   --code-bg: #f0f0ee;
   --code-line-num: #767676;
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
@@ -34,7 +34,6 @@ html {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-
 }
 
 :focus-visible {
