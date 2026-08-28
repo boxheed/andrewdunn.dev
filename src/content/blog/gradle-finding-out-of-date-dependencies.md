@@ -1,0 +1,6 @@
+---
+title: 'Gradle finding out of date dependencies'
+date: 2015-01-29T18:00:00Z
+---
+
+Ever wondered how to find dependencies that are no longer up to date in Gradle? Well Ben Manes has the plugin for you in the [Gradle Versions Plugin](https://github.com/ben-manes/gradle-versions-plugin). I'm not going to detail how to use it, it is plainly documented on his site, needless to say ensuring that your dependencies are as up to date as possible is crucial to managing your software, if you don't know that the libraries are out of date then you can't make sensible decisions on your software versioning.

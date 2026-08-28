@@ -1,0 +1,14 @@
+---
+title: 'Stuck on CircleCI'
+date: 2023-03-13T20:44:00Z
+---
+
+ 2 years later and where did my CI journey take me? 
+
+Well as it turns out not very far. My first migration to [CircleCI](https://circleci.com/) was so successful that I didn't feel the need to go any further!
+
+[CircleCI](https://circleci.com/) hasn't been perfect, there have been issues with performance and a pretty public data breach but that has not put me off! Once you have fixed on a CI system that fulfils the basic requirements then they are pretty sticky! In hindsight I knew [CircleCI](https://circleci.com/) would be pretty good if you look at the number of posts and public reviews it always comes out well so I should probably have started with the unlikely candidates first!
+
+Now we're 2 years on has anything changed? The answer is no - not really. As of the date of this post this GitHub repo [ligurio/awesome-ci](https://github.com/ligurio/awesome-ci) has a great well maintained list of CI servers/services so if [CircleCI](https://circleci.com/) doesn't do it for you then you're bound to find one that does by reviewing that list. 
+
+For me, I'll stick with [CircleCI](https://circleci.com/) - at least for now!

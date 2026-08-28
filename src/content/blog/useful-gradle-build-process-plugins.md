@@ -1,0 +1,20 @@
+---
+title: 'Useful Gradle Build Process Plugins'
+date: 2015-01-29T15:48:00Z
+---
+
+[Gradle](http://gradle.org/) is a great tool for building Java projects, in my opinion it is much better than its only real competitor [Maven](http://maven.apache.org/). A lot has been written about [Gradle](http://gradle.org/) especially with comparison to [Maven](http://maven.apache.org/) and building with it, I'm not really going to cover that. What I am going to do is highlight a few plugins which I find invaluable when putting a Gradle script together for a Java project.
+
+## Release Management
+
+Maven has the well known and well publicised ['Maven Release Plugin'](http://maven.apache.org/maven-release/maven-release-plugin/), but what is there for Gradle? Well there are a few options out there (search for gradle release plugin) but for me the best one is the [Axion Release Plugin](https://github.com/allegro/axion-release-plugin).
+
+This nicely separates the release management from the building of the software, in addition the versioning is controlled by the source control system tags rather than in Maven where it goes and edits the XML files and has to push these back to the repository.
+
+## Distribution
+
+Ever struggled with the question 'How should I distribute my Java application?' there has never really been a nice consistent way to distribute it. As Java developers that has usually been left to other people to figure out. However if you look around the web at the tools that we use as developers you are seeing more and more applications packaged up in an easily distributable manner. Enter the [Gradle OS Package](https://github.com/nebula-plugins/gradle-ospackage-plugin) plugin developed by the clever people at [NetFlix](https://www.netflix.com/). It allows you to create a distribution of your application as an RPM or DEB package for easy installation on to Linux. 
+
+## Enforcing version
+
+How many times have you tried to run a build, found that things on your machine are not quite the same as on someone else's or on the build server and the software doesn't quite build in the same way? Maven has the [Enforcer Plugin](http://maven.apache.org/enforcer/maven-enforcer-plugin/), Gradle doesn't have a plugin with quite the same power or flexibility as the enforcer, but it is easy to role your own as this [blog](http://kaczanowscy.pl/tomek/2009-07/ant-gradle-and-maven-comparison-checking-build-prerequisites) details. One of the downsides is that it has no consistency of DSL support. There is an open source [gradle enforcer plugin](https://github.com/stliu/gradle-enforcer) however this hasn't been released so not available in any public repository as far as I am aware and is actually quite old now.

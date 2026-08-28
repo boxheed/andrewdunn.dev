@@ -1,0 +1,26 @@
+---
+title: 'Goodbye Shippable Hello ... CircleCI'
+date: 2021-02-08T21:33:00.004Z
+---
+
+Migration number 1... CircleCI  how did it go and what did I think?
+
+Well it was pretty smooth, the free tier worked pretty well. The configuration for a Java project was smaller than what I ended up with with Shippable (I could remove some of the boiler plate setup). The builds were significantly faster than Shippable.
+
+Initial implementation was quick to do, I like the way it walked me through creating the first configuration. however trying to refine it into something more robust took a fair amount of time and that is where I came across some of it's shortcomings:
+
+- Workflows are a bit confusing, and whilst it seemed like they would be ideal for different flows for building and publishing the artefacts this ended up not being the case and it would have been simpler just to use jobs at the top level if it wasn't wanting to inject 'secrets' into the build.
+- Unable to define a global setup step, this looks like what an 'orb' would be used for but ended up just sourcing a script from Github which is a bit of a disappointment
+- Injecting secrets into the build script required the usage of 'contexts' which needed a workflow but they needed to be defined for each job in a workflow rather than just having a global definition. I get why you would want job level contexts but for a simple configuration this adds bloat
+- Ended up having a 'build' and 'publish' job where publish was only run based on a filter. I couldn't have a separate 'publish' workflow with a global filter on it so the workflow was chosen based on a filter.
+- The configuration ended up being more verbose than should have been necessary, a lot of duplicated configuration, the script was simple but I could see how it would easily grow, maybe this is where an 'orb' would have come in useful.
+- Feels like the job could get quite complicated quite quickly so time would need to be invested into investigating native functionality
+
+So the good:
+
+- Took me through my first configuration file which made setup easier
+- Configuration ended up being simpler than Shippable some of the conditional elements I had in shippable could be removed and filters used.
+- Much faster builds, this was significant
+- I can store my artefacts on CircleCI so I can download them to check the build, Shippable originally had this feature but removed it
+
+What do I think? If Shippable hadn't shut down? Well for almost everything it is better, except for one item - the number of builds you get on the free tier, Shippable had completely unlimited build (limits on concurrency) for open source projects, and a limit on the number of private repo builds which was quite generous. But this isn't comparing like for like, Shippable is going and CircleCI is in many ways a better CI system than Shippable ever was you certainly wouldn't regret a migration to CircleCI, just check your predicted usage first.

@@ -1,0 +1,26 @@
+---
+title: 'Enforcement Rules in Gradle'
+date: 2015-04-15T10:39:00Z
+---
+
+I previously noted that Gradle has no built in enforcement rules, there is a blog [here](http://kaczanowscy.pl/tomek/2009-07/ant-gradle-and-maven-comparison-checking-build-prerequisites) detailing how you can add your own, but that's not satisfactory for a number of reasons which I won't go in to. What is one to do? Well this one took that as a challenge so the gauntlet has been thrown down and accepted!
+
+## Sweeney
+
+Well the first rule of any development is to come up with a suitably obscure and memorable name. So my thinking went: enforces rules -> like the police -> what do we call the police? Well a number of things but in the UK 'The Sweeney' was a memorable Police drama (at least for me) hence sweeney!
+
+## Sweeney Gradle Plugin
+
+The [sweeney gradle plugin](https://github.com/boxheed/gradle-sweeney-plugin) supports a few basic rules out of the box with a couple of specifics for the Java and Gradle versions, it also supports enforcing rules and emitting warnings from rules. 
+
+## Built in Rules
+
+Out of the box it has an equality, pattern and version range rules that can be configured, using syntax very similar to how dependencies are defined (indeed I used that as inspiration). In addition (at least at time of writing) it has support for validating the Java version number and Gradle version number.
+
+## Extensible
+
+Since I know that I won't be able to cover every rule out there and that people/companies will have their own requirements to enforce build practices then the plugin is designed for users to add in there own rules (and definition parsers) so that it has flexibility which hopefully will ease adoption.
+
+## How does this help?
+
+This plugin provides the community with a foundation to build extensible validation rules for Gradle build processes, comes with some useful built in rules and gives a consistent mechanism to define them that is easy to understand.

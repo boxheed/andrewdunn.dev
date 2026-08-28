@@ -1,0 +1,174 @@
+---
+title: 'Gradle and the parent pom'
+date: 2015-02-10T19:30:00Z
+---
+
+We've all got used to various maven features that we have come to rely on, and in my effort to migrate to Gradle I have endeavoured to find alternative replacments, one of which is the parent POM functionality. Gradle does not natively have this feature that as Maven users we rely on.
+
+### Workarounds
+
+There are a number of workarounds documented, firstly the most common is to use the apply from to load a file from a URI (you can use a URL) but this is not ideal for many reasons. The alternative is to write your own plugin that alters your build.gradle file. Anorakgirl has a great write-up on how to do this here [Gradle and the parent POM](http://blog.anorakgirl.co.uk/2014/12/gradle-and-the-parent-pom/) and is the inspiration for my plugin.
+
+### Gradle pater-build plugin
+
+I love Anorakgirls write up but I was thinking that it really is a workaround and devs would need to start to understand the internal Gradle API, so if the apply from syntax has its short comings as Anorakgirl pointed out then how about subverting or working around them. I created the [gradle-pater-build-plugin](https://github.com/boxheed/gradle-pater-build-plugin) to do just that, the plugin allows you to define your Gradle build scripts inside a jar file and load them in (along with their dependencies) have them automatically discovered and applied to your build script.
+
+### A Simple Example
+
+Lets take a slightly contrived example, you're a Java house and you want to enforce the use of JUnit (and a specific version) through all of your projects, Using the pater-build plugin you would do the following:
+
+#### Step 1: Create your project
+
+Create your Java gradle project, the simplest way is to create a directory (for the purpose of this example we will call it junit-dependency) and run:
+
+```
+gradle init wrapper
+
+```
+
+This will create an empty project.
+
+#### Step 2: Create your build file
+
+Edit your build.gradle file to add the java and maven plugins as well as setting up your repositories. It should end up looking like:
+
+```java
+apply plugin: 'java'
+apply plugin: 'maven'
+
+repositories {
+    jcenter()
+    mavenLocal()
+}
+
+group = 'com.example'
+version = '1.0'
+
+dependencies {
+
+}
+
+```
+
+### Step 3: Create your parent gradle file
+
+Create the build script that will be packaged up inside the jar file. From the root of your project you need to create the following folders
+
+```
+src/main/resources/META-INF/pater-build
+```
+
+and in it put the gradle build file, let's call this
+
+```
+java-junit.gradle
+```
+
+In this file we need to add in the JUnit dependency so it will end up looking like:
+
+```java
+apply plugin: 'java'
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+}
+
+```
+
+In addition the build script needs to include the java plugin in order to get the testCompile scope.
+
+### Step 4: Create your jar containing your parent gradle file
+
+Compile and install your new library using the following command:
+
+```java
+gradle clean install
+
+```
+
+This will create a jar artifact in your local maven repository under the group 'com.example', the artifact name 'junit-dependency' and the version '1.0'
+
+### Step 5: Include your parent jar as a build script dependency
+
+To use your newly created library as a template you need to include it in your build script dependencies along with the pater-build plugin. A build script to use it (in this case we will call it usage.gradle) would look like:
+
+```java
+buildscript {
+ repositories {
+  mavenLocal()
+  jcenter()
+ }
+ dependencies {
+  //apply the pater plugin in order to discover gradle build scripts
+  classpath 'com.fizzpod:gradle-pater-build-plugin:1.0.0'
+  //apply your plugin in the build script for scanning by the pater plugin
+  classpath 'com.example:junit-dependency:1.0'
+ }
+}
+
+repositories {
+    jcenter()
+    mavenLocal()
+}
+//apply the pater-build plugin to discover the other gradle build scripts
+apply plugin: 'com.fizzpod.pater-build'
+
+
+```
+
+This includes the pater-build plugin which will scan for gradle build scripts inside other jars included on the buildscript classpath and the jar file you created in Step 4 which holds your custom build script.
+
+If you run the usage.gradle file with a -i flag:
+
+```
+gradle -b usage.gradle -i
+```
+
+You will see the logging from the pater-build plugin saying that it has found your build script.
+
+```
+Using build file resolvers:
+Discovered build files: [META-INF/pater-build/java-junit.gradle]
+
+```
+
+If you then run the dependencies task you will see a report that includes JUnit as a dependency:
+
+```
+gradle -b usage.gradle dependencies
+```
+
+```
+------------------------------------------------------------
+Root project
+------------------------------------------------------------
+
+archives - Configuration for archive artifacts.
+No dependencies
+
+compile - Compile classpath for source set 'main'.
+No dependencies
+
+default - Configuration for default artifacts.
+No dependencies
+
+runtime - Runtime classpath for source set 'main'.
+No dependencies
+
+testCompile - Compile classpath for source set 'test'.
+\--- junit:junit:4.12
+     \--- org.hamcrest:hamcrest-core:1.3
+
+testRuntime - Runtime classpath for source set 'test'.
+\--- junit:junit:4.12
+     \--- org.hamcrest:hamcrest-core:1.3
+
+BUILD SUCCESSFUL
+
+```
+
+### Summary
+
+So what just happened? Well the pater-build plugin scanned the other libraries included on the buildscript classpath and discovered the java-junit.gradle file in the com.example:junit-dependency:1.0 library. It then proceeded to load it into the gradle build file to automatically include JUnit into the testCompile setting in the root build script. 
+
+This is a very simple example of the power that the pater-build plugin gives you to create a suite of libraries that define the dependencies and default settings for all sorts of projects in much the same way as the Maven parent pom can.
