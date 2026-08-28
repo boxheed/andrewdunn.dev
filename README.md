@@ -2,11 +2,11 @@
 
 The personal engineering blog and portfolio for Andrew Dunn.
 
-Built with **Astro 5.x** and **MDX**, this site eschews modern bloat in favor of a strict, minimalist brutalist design system dubbed "Purity & Void".
+Built with **Astro 7.x** and **MDX**, this site eschews modern bloat in favor of a strict, minimalist brutalist design system dubbed "Purity & Void".
 
 ## 🏗️ Architecture
 
-- **Framework:** Astro 5.x (Static Site Generation)
+- **Framework:** Astro 7.x (Static Site Generation)
 - **Content:** MDX via Astro Content Collections (`src/content/blog/`)
 - **Styling:** Vanilla CSS (`src/styles/global.css`)
 - **Syntax Highlighting:** Shiki (Custom dual-tone `purity-void` theme)

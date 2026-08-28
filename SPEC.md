@@ -2,7 +2,7 @@
 
 ## 1. Architectural Overview
 
-- **Framework:** Astro 5.x (SSG mode, zero client-side JavaScript default).
+- **Framework:** Astro 7.x (SSG mode, zero client-side JavaScript default).
 - **Target Platform:** Cloudflare Pages (`@astrojs/cloudflare` adapter optional for SSR, static export default).
 - **Content Engine:** Astro Content Collections (`src/content/blog/`) parsing Markdown/MDX with frontmatter validation (Zod).
 - **Styling Architecture:** Only use vnilla modern CSS (fluid typography via `clamp()`, grid, flexbox).
