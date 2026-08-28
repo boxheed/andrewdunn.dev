@@ -1,11 +1,6 @@
 ---
 // CodeBlock.astro
-interface Props {
-  language?: string;
-  code: string;
-}
-
-const { language, code } = Astro.props;
+const props = Astro.props;
 ---
 
 <div class="code-block-wrapper" style="position: relative; margin: 2rem 0;">
@@ -17,8 +12,8 @@ const { language, code } = Astro.props;
   >
     Copy
   </button>
-  <div aria-label={`Code block in ${language || 'text'}`}>
-    <slot />
+  <div aria-label="Code block">
+    <pre {...props}><slot /></pre>
   </div>
 </div>
 
