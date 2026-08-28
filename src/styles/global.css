@@ -101,6 +101,15 @@ li::marker {
   color: var(--text-muted);
 }
 
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 2rem 0;
+  border: 1px solid var(--code-bg);
+  border-radius: 0;
+}
+
 .post-title {
   font-size: clamp(2rem, 5vw, 4rem);
   font-weight: 800;

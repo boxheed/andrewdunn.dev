@@ -45,6 +45,13 @@
 - **Marker Color:** Bullets and numerical markers are rendered in muted text (`var(--text-muted)`) to subdue their visual weight, ensuring they do not introduce unnecessary chromatic clutter or pull focus from the typography.
 - **Vertical Rhythm:** Individual items feature tight bottom spacing (`margin-bottom: 0.5rem`) to read as an organized cluster, while the entire list block concludes with a standard spacing break (`margin-bottom: 1.5rem`) to match the cadence of headings and code blocks.
 
+### Image Styling
+
+- **Strict Width and Centering:** Force all embedded images to `max-width: 100%` and `height: auto` so they never overflow the 800px column width, and center them or align them flush with the text grid.
+- **Structural Framing:** Enclose screenshots in a thin, neutral border using your code background or border tokens (`border: 1px solid var(--code-bg)`) to give them the physical presence of printed figures.
+- **Zero Radius & Sharp Corners:** Mirror the code blocks by stripping any default border-radius (`border-radius: 0`), keeping the hard industrial edges intact.
+- **Controlled Spacing:** Add disciplined vertical margins (`margin: 2rem 0`) to separate the figure from preceding lists and subsequent text blocks.
+
 ---
 
 ## 3. Accessibility (WCAG 2.2 AA Compliance)
@@ -207,6 +214,15 @@ li {
 
 li::marker {
   color: var(--text-muted);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 2rem 0;
+  border: 1px solid var(--code-bg);
+  border-radius: 0;
 }
 ```
 
