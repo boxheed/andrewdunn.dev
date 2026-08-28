@@ -25,7 +25,7 @@ The site enforces a ruthless, content-first aesthetic. It uses no UI frameworks 
 
 ### Prerequisites
 
-- Node.js (v20+)
+- Node.js (v24+)
 - npm
 
 ### Installation
