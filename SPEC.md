@@ -38,6 +38,13 @@
 - Structural hierarchy must be defined by whitespace increments (`64px`, `96px`, `128px`).
 - Interactive elements must not rely on color alone: link states require a solid geometric underline shift (`text-decoration-thickness: 2px`).
 
+### List Styling
+
+- **Left Alignment:** List items must align precisely with the left edge of the main body paragraphs, maintaining a strict vertical coordinate without floating outward into the negative space.
+- **Indentation Shape:** Unordered bullets and ordered numbers sit within a controlled indent (`padding-left: 1.5rem`), pulling them slightly inward from the primary text margin while keeping the text block uniform.
+- **Marker Color:** Bullets and numerical markers are rendered in muted text (`var(--text-muted)`) to subdue their visual weight, ensuring they do not introduce unnecessary chromatic clutter or pull focus from the typography.
+- **Vertical Rhythm:** Individual items feature tight bottom spacing (`margin-bottom: 0.5rem`) to read as an organized cluster, while the entire list block concludes with a standard spacing break (`margin-bottom: 1.5rem`) to match the cadence of headings and code blocks.
+
 ---
 
 ## 3. Accessibility (WCAG 2.2 AA Compliance)
@@ -186,6 +193,20 @@ pre {
   font-size: 0.95rem;
   line-height: 1.6;
   border-radius: 0;
+}
+
+ul,
+ol {
+  margin: 0 0 1.5rem 0;
+  padding-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+li::marker {
+  color: var(--text-muted);
 }
 ```
 
