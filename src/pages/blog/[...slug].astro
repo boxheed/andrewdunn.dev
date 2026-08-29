@@ -5,16 +5,33 @@ import CodeBlock from '../../components/CodeBlock.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
-  return posts.map((post) => ({
-    params: { slug: post.id },
-    props: { post },
-  }));
+  const sortedPosts = [...posts].sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
+  return sortedPosts.map((post, index) => {
+    const prev =
+      index > 0
+        ? {
+            title: sortedPosts[index - 1].data.title,
+            url: `/blog/${sortedPosts[index - 1].id}`,
+          }
+        : null;
+    const next =
+      index < sortedPosts.length - 1
+        ? {
+            title: sortedPosts[index + 1].data.title,
+            url: `/blog/${sortedPosts[index + 1].id}`,
+          }
+        : null;
+    return {
+      params: { slug: post.id },
+      props: { post, prev, next },
+    };
+  });
 }
 
-const { post } = Astro.props;
+const { post, prev, next } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<PostLayout title={post.data.title} date={post.data.date}>
+<PostLayout title={post.data.title} date={post.data.date} prev={prev} next={next}>
   <Content components={{ pre: CodeBlock }} />
 </PostLayout>

@@ -1,13 +1,16 @@
 ---
 // PostLayout.astro
 import BaseLayout from './BaseLayout.astro';
+import PostNavigation from '../components/PostNavigation.astro';
 
 interface Props {
   title: string;
   date: Date;
+  prev?: { title: string; url: string } | null;
+  next?: { title: string; url: string } | null;
 }
 
-const { title, date } = Astro.props;
+const { title, date, prev, next } = Astro.props;
 ---
 
 <BaseLayout title={`${title} | Andrew Dunn`}>
@@ -21,6 +24,7 @@ const { title, date } = Astro.props;
     <div class="post-content">
       <slot />
     </div>
+    <PostNavigation prev={prev} next={next} />
   </article>
 </BaseLayout>
 

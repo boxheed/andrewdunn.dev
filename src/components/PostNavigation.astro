@@ -1,0 +1,94 @@
+---
+// PostNavigation.astro
+interface LinkData {
+  title: string;
+  url: string;
+}
+
+interface Props {
+  prev?: LinkData | null;
+  next?: LinkData | null;
+}
+
+const { prev, next } = Astro.props;
+---
+
+{
+  (prev || next) && (
+    <nav class="post-navigation" aria-label="Post navigation">
+      {prev ? (
+        <a href={prev.url} class="nav-link prev-link">
+          <span aria-hidden="true">&lt;- </span>Previous: {prev.title}
+        </a>
+      ) : (
+        <div class="nav-empty" />
+      )}
+      {next && (
+        <a href={next.url} class="nav-link next-link">
+          Next: {next.title}
+          <span aria-hidden="true"> -&gt;</span>
+        </a>
+      )}
+    </nav>
+  )
+}
+
+<style>
+  .post-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 64px;
+    gap: 2rem;
+  }
+
+  .nav-link {
+    color: var(--text-primary);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    max-width: 48%;
+  }
+
+  .nav-link:hover,
+  .nav-link:focus-visible {
+    text-decoration-thickness: 2px;
+  }
+
+  .prev-link {
+    text-align: left;
+  }
+
+  .next-link {
+    text-align: right;
+    margin-left: auto;
+  }
+
+  .nav-empty {
+    flex: 1;
+    max-width: 48%;
+  }
+
+  @media (max-width: 600px) {
+    .post-navigation {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+
+    .nav-link {
+      max-width: 100%;
+      text-align: left;
+    }
+
+    .next-link {
+      margin-left: 0;
+    }
+
+    .nav-empty {
+      display: none;
+    }
+  }
+</style>
