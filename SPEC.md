@@ -287,3 +287,4 @@ The agent must install and configure the following infrastructure for repository
   - Configure a `pre-commit` hook to run Prettier and ESLint against staged files.
 - **Node Engine:** Add an `.nvmrc` file specifying Node v24.20.0 (to satisfy `eslint-plugin-astro` constraints) and define `engine` constraints in `package.json`.
 - **Sitemap:** Add `@astrojs/sitemap` add the integration to `astro.config.mjs`.
+- **Dependency Management:** Add `.github/dependabot.yml` configured to check for `npm` dependency updates on a weekly interval.
