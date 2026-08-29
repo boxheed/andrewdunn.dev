@@ -285,5 +285,5 @@ The agent must install and configure the following infrastructure for repository
 - **Commit Standards:** Install `husky` and `@commitlint/config-conventional`.
   - Configure a `commit-msg` hook to strictly enforce Conventional Commits.
   - Configure a `pre-commit` hook to run Prettier and ESLint against staged files.
-- **Node Engine:** Add an `.nvmrc` file specifying Node v20+ and define `engine` constraints in `package.json`.
+- **Node Engine:** Add an `.nvmrc` file specifying Node v24.20.0 (to satisfy `eslint-plugin-astro` constraints) and define `engine` constraints in `package.json`.
 - **Sitemap:** Add `@astrojs/sitemap` add the integration to `astro.config.mjs`.
