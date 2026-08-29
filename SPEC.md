@@ -52,6 +52,22 @@
 - **Zero Radius & Sharp Corners:** Mirror the code blocks by stripping any default border-radius (`border-radius: 0`), keeping the hard industrial edges intact.
 - **Controlled Spacing:** Add disciplined vertical margins (`margin: 2rem 0`) to separate the figure from preceding lists and subsequent text blocks.
 
+### Dark Mode Support
+
+To maintain the mechanical rigidity of the design system under light and dark theme configurations, the dark mode must adhere to the following strict material constraints (preventing eye strain and astigmatism-induced optical halation):
+
+1. **The Matte Void (Background):** Never use pure black (`#000000`) for the background void. Use machined dark gray (`#121212`) to preserve depth and physical presence.
+2. **Text as Raw Material:** Set the primary body text to a soft off-white (`#EAEAEA`) to easily clear the WCAG AA 4.5:1 minimum threshold against the dark background while avoiding the harshness of a maximum 21:1 contrast ratio.
+3. **The Static Anchor:** The 4px deep crimson spine (`#c10016`) remains completely unchanged, serving as a fixed coordinate across both themes.
+4. **Code Block Geometry:** Code blocks remain monochromatic and zero-radius. Push their background slightly lighter (`#1E1E1E`) than the main body void to carve out a distinct functional zone. Keep syntax token colors purely monochromatic using shades of gray matching `var(--text-primary)`, `var(--text-muted)`, and `var(--code-line-num)`.
+5. **Dark Mode Tokens:**
+   - `--bg-void`: `#121212`
+   - `--text-primary`: `#EAEAEA`
+   - `--text-muted`: `#8C8C8C` (passes WCAG AA contrast against `--bg-void`)
+   - `--code-bg`: `#1E1E1E`
+   - `--code-line-num`: `#8C8C8C` (passes WCAG AA contrast against `--code-bg`)
+6. **Theme Override Toggle:** Treat the manual override toggle as a mechanical hardware selector switch. Avoid sun and moon icons. Expose both state options and bracket the active one in monospace font (e.g. `Theme: [ Light ] / Dark` or `Theme: Light / [ Dark ]`). This acts as both status telemetry and actuator: clicking the inactive theme label switches the active state. The setting must immediately update the document class list, write to local storage, and update button states dynamically. Prevent a Flash of Unthemed Content (FOUC) by executing a blocking inline initialization script in `<head>`.
+
 ---
 
 ## 3. Accessibility (WCAG 2.2 AA Compliance)

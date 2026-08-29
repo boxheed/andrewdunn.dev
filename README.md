@@ -16,10 +16,11 @@ Built with **Astro 7.x** and **MDX**, this site eschews modern bloat in favor of
 
 The site enforces a ruthless, content-first aesthetic. It uses no UI frameworks (like Tailwind or Bootstrap). All styling relies on a few tightly controlled CSS variables and strict semantic HTML:
 
-- **Typography:** System fonts, high-contrast monochrome (`#1A1A1A` on `#F0F0EE`).
+- **Typography & Contrast:** High-contrast, monochromatic typography designed to prevent optical eye strain and halation (Light: `#1A1A1A` on `#FCFCFA`; Dark: `#EAEAEA` on `#121212`). Meets WCAG AA contrast ratio standards.
+- **Theme Modes:** Native system preferences auto-detection with a mechanical monospace manual selector switch override (`Theme: [ Light ] / Dark` / `Theme: Light / [ Dark ]`) in the navigation header.
 - **Whitespace:** Mathematical rhythm (`64px`, `96px`, `128px`).
-- **Structure:** A single, centralized `800px` content column framed by a solid structural spine (`border-left: 4px solid`).
-- **Accessibility:** Fully semantic DOM (Header, Main, Footer, Article) with visually-hidden skip links and live ARIA regions for interactive components.
+- **Structure:** A single, centralized `800px` content column framed by a solid structural spine (`border-left: 4px solid var(--accent-action)`). The crimson spine remains unchanged in both modes to serve as a constant coordinate.
+- **Accessibility:** Fully semantic DOM (Header, Main, Footer, Article) with visually-hidden skip links, keyboard focus styles, and live ARIA regions for interactive components.
 
 ## 🚀 Getting Started
 

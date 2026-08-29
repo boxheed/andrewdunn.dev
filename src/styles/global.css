@@ -9,6 +9,14 @@
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
+.dark {
+  --bg-void: #121212;
+  --text-primary: #eaeaea;
+  --text-muted: #8c8c8c;
+  --code-bg: #1e1e1e;
+  --code-line-num: #8c8c8c;
+}
+
 *,
 *::before,
 *::after {
@@ -143,4 +151,55 @@ a {
 a:hover,
 a:focus-visible {
   text-decoration-thickness: 2px;
+}
+
+.theme-selector {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.theme-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.theme-btn:focus-visible {
+  outline: 2px solid var(--accent-action);
+  outline-offset: 4px;
+}
+
+html:not(.dark) #theme-btn-light::before,
+html.dark #theme-btn-dark::before {
+  content: '[ ';
+}
+
+html:not(.dark) #theme-btn-light::after,
+html.dark #theme-btn-dark::after {
+  content: ' ]';
+}
+
+.copy-btn {
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+.copy-btn:hover {
+  background-color: var(--text-primary) !important;
+  color: var(--bg-void) !important;
 }

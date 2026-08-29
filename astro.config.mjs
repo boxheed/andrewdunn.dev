@@ -15,13 +15,13 @@ export default defineConfig({
         name: 'purity-void',
         type: 'light',
         colors: {
-          'editor.background': '#F0F0EE',
-          'editor.foreground': '#1A1A1A',
+          'editor.background': 'var(--code-bg)',
+          'editor.foreground': 'var(--text-primary)',
         },
         tokenColors: [
           {
             scope: ['comment', 'punctuation.definition.comment', 'string.comment'],
-            settings: { foreground: '#767676', fontStyle: 'italic' },
+            settings: { foreground: 'var(--code-line-num)', fontStyle: 'italic' },
           },
           {
             scope: [
@@ -31,11 +31,11 @@ export default defineConfig({
               'entity.name.function',
               'support.function',
             ],
-            settings: { fontStyle: 'bold', foreground: '#1A1A1A' },
+            settings: { fontStyle: 'bold', foreground: 'var(--text-primary)' },
           },
           {
             scope: ['string', 'constant', 'entity.name.type'],
-            settings: { foreground: '#595959' },
+            settings: { foreground: 'var(--text-muted)' },
           },
         ],
       },
