@@ -1,0 +1,22 @@
+---
+title: 'The Architecture of Emptiness in UI Design'
+date: 2026-08-29T00:08:00.003Z
+---
+
+Most web templates rely on browser defaults and bloated styling, resulting in a generic document viewer. When building andrewdunn.dev, the goal was to construct an interface with strict tolerances. The layout applies designer [Kenya Hara’s concept of emptiness](https://www.google.com/search?q=https://www.ndc.co.jp/hara/en/philosophy/) as a structural component. In his writings, Hara argues that while standard "simplicity" is just about stripping things away to make a specific function clearer, "emptiness" is about building a structure that is completely open and ready to be used. This design treats empty space as a deliberate engineering choice rather than just a lack of content.
+
+## The Structural Spine
+
+On the web, unconstrained elements float. To fix this, the layout is anchored by a 4px deep crimson spine (`#C10016`) that establishes a hard left reference edge. Capping the content column at an 800px maximum width stops the text from stretching across wide viewports. This directly applies Hara’s principle that you need strong, defined boundaries to actually create empty space. By locking the geometry to a vertical axis, the page stops acting like an infinite canvas and becomes a rigid container ready for data.
+
+## Typography as Geometry
+
+Instead of managing multiple responsive breakpoints, the design uses [fluid CSS clamps](https://developer.mozilla.org/en-US/docs/Web/CSS/clamp) (`clamp(2.5rem, 7vw, 5.5rem)`). Headings scale mechanically based on the viewport dimensions. Paired with a strict baseline and tight line-heights, the text stops feeling fluid and reads like a technical specification. Hara often notes that a well-designed tool shouldn't over-engineer for ergonomics; it should provide a plain, unyielding surface that forces the user to adapt to it. The rigid typography here functions the same way: it provides a precise edge that forces the content to conform to the structure, rather than bending the structure to fit the content.
+
+## Monochromatic Monospace
+
+Standard multi-color syntax highlighting is visual noise that distracts from the logic, so it is stripped out entirely. Code blocks sit on a flat, off-white field (`#F0F0EE`) with zero-radius corners, and line numbers are implemented as muted [CSS counters](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_counter_styles/Using_CSS_counters). This borrows from Hara’s exploration of the [color white](https://www.google.com/search?q=https://www.lars-mueller-publishers.com/white-0). He treats white not as a lack of pigment, but as a neutral baseline that brings intense focus to whatever is placed on it. By removing the chromatic clutter, the code block becomes a neutral zone. It forces focus onto the raw data, treating the unstyled space as a functional material rather than a blank background.
+
+## Materiality
+
+Enforcing strict constraints changes how the site operates. Cut the CSS bloat and apply rigid layout rules, and the interface stops acting like a flexible canvas. It becomes a functional tool built to spec. When emptiness is applied as an engineering principle, the UI simply does its job without getting in the way. It waits for the reader to pull what they need from it, exactly as a well-designed instrument should.
