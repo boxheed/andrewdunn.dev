@@ -1,0 +1,109 @@
+---
+// SeriesIndex.astro
+interface Article {
+  title: string;
+  url: string;
+  isCurrent: boolean;
+}
+
+interface Props {
+  seriesTitle: string;
+  articles: Article[];
+}
+
+const { seriesTitle, articles } = Astro.props;
+
+const formatIndex = (index: number) => String(index + 1).padStart(2, '0');
+---
+
+{
+  articles && articles.length > 0 && (
+    <div class="series-index">
+      <div class="series-header">Series: {seriesTitle}</div>
+      <div class={articles.length <= 3 ? 'series-inline' : 'series-stack'}>
+        {articles.map((art, index) => {
+          const paddedIndex = formatIndex(index);
+          const label = `${paddedIndex}. ${art.title}`;
+          return (
+            <>
+              <span class="series-item">
+                {art.isCurrent ? (
+                  <span class="current-item" aria-current="page">
+                    [ {label} ]
+                  </span>
+                ) : (
+                  <a href={art.url} class="series-link">
+                    {label}
+                  </a>
+                )}
+              </span>
+              {articles.length <= 3 && index < articles.length - 1 && (
+                <span class="series-separator" aria-hidden="true">
+                  {' '}
+                  /{' '}
+                </span>
+              )}
+            </>
+          );
+        })}
+      </div>
+    </div>
+  )
+}
+
+<style>
+  .series-index {
+    margin: 2rem 0 3rem 0;
+    text-align: left;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .series-header {
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .series-inline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 0.25rem;
+    row-gap: 0.5rem;
+  }
+
+  .series-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .series-item {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .series-link {
+    color: var(--text-primary);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+  }
+
+  .series-link:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  .current-item {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .series-separator {
+    color: var(--text-muted);
+    user-select: none;
+  }
+</style>

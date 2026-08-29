@@ -105,7 +105,7 @@ To maintain the mechanical rigidity of the design system under light and dark th
 - **File Path:** `src/components/PostNavigation.astro` [NEW].
 - **UI/Styling Constraints:**
   - Must not use borders, cards, rounded corners, or background colors.
-  - Links must render as raw underlined text conforming to structural link styles.
+  - Links must render in monospace font (`var(--font-mono)`) as raw underlined text conforming to structural link styles.
 - **Layout Logic:**
   - Desktop: Flex container (`display: flex`) with `justify-content: space-between`. The "Previous" link sits flush left; the "Next" link sits flush right.
   - Mobile (viewport `< 600px`): Stack links vertically (`flex-direction: column`). Both links align flush left.
@@ -115,7 +115,24 @@ To maintain the mechanical rigidity of the design system under light and dark th
 - **Data Contract:**
   - Accepts `prev` and `next` props of type `{ title: string; url: string } | null | undefined`. If either prop is missing/null, render nothing on that side.
 
-## 6. File & Directory Structure
+## 6. Series Index Specification
+
+- **File Path:** `src/components/SeriesIndex.astro` [NEW].
+- **UI/Styling Constraints:**
+  - Raw text only. Zero cards, borders, rounded corners, or background colors.
+  - List items must be flush left aligned with no standard list markers or bullets.
+- **State Representation (Bracketed State Pattern):**
+  - Mapped items prefixed with a zero-padded index (e.g. `01. `, `02. `).
+  - Current post rendered as raw text wrapped in monospace brackets (e.g. `[ 02. Typography ]`) with `aria-current="page"`. No `<a>` tag.
+  - Inactive posts rendered as standard anchor tags (e.g. `<a href="...">01. The Spine</a>`).
+- **Scalability Logic:**
+  - Starts with the header line `Series: {seriesTitle}`.
+  - Inline layout (articles length <= 3): Render items inline, separated by raw slash (`/`) wrapped in `aria-hidden="true"`.
+  - Stack layout (articles length > 3): Render items vertically in a column stack, removing the slash separators.
+- **Data Contract:**
+  - Accepts `seriesTitle` (string) and `articles` (`Array<{ title, url, isCurrent }>`).
+
+## 7. File & Directory Structure
 
 ```
 ├── public/
@@ -136,6 +153,7 @@ To maintain the mechanical rigidity of the design system under light and dark th
 │   │   ├── PostPreview.astro
 │   │   ├── CodeBlock.astro
 │   │   ├── PostNavigation.astro
+│   │   ├── SeriesIndex.astro
 │   │   └── SkipLink.astro
 │   ├── pages/
 │   │   ├── index.astro
@@ -149,7 +167,7 @@ To maintain the mechanical rigidity of the design system under light and dark th
 └── tsconfig.json
 ```
 
-## 7. CSS Baseline (src/styles/global.css)
+## 8. CSS Baseline (src/styles/global.css)
 
 The agent must generate the global stylesheet using exactly these foundational rules:
 
@@ -258,7 +276,7 @@ img {
 }
 ```
 
-## 8. Project Governance & Tooling
+## 9. Project Governance & Tooling
 
 The agent must install and configure the following infrastructure for repository governance:
 

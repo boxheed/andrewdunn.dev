@@ -21,17 +21,33 @@ export async function getStaticPaths() {
             url: `/blog/${sortedPosts[index + 1].id}`,
           }
         : null;
+
+    // Series linkage
+    let series = null;
+    if (post.data.series) {
+      const seriesId = post.data.series.id;
+      const seriesPosts = sortedPosts.filter((p) => p.data.series && p.data.series.id === seriesId);
+      series = {
+        title: post.data.series.title,
+        articles: seriesPosts.map((p) => ({
+          title: p.data.title,
+          url: `/blog/${p.id}`,
+          isCurrent: p.id === post.id,
+        })),
+      };
+    }
+
     return {
       params: { slug: post.id },
-      props: { post, prev, next },
+      props: { post, prev, next, series },
     };
   });
 }
 
-const { post, prev, next } = Astro.props;
+const { post, prev, next, series } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<PostLayout title={post.data.title} date={post.data.date} prev={prev} next={next}>
+<PostLayout title={post.data.title} date={post.data.date} prev={prev} next={next} series={series}>
   <Content components={{ pre: CodeBlock }} />
 </PostLayout>

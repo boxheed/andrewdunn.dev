@@ -7,6 +7,12 @@ const blog = defineCollection({
     title: z.string(),
     date: z.coerce.date(),
     description: z.string().optional(),
+    series: z
+      .object({
+        title: z.string(),
+        id: z.string(),
+      })
+      .optional(),
   }),
 });
 

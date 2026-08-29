@@ -9,7 +9,7 @@ Built with **Astro 7.x** and **MDX**, this site eschews modern bloat in favor of
 - **Framework:** Astro 7.x (Static Site Generation)
 - **Content:** MDX via Astro Content Collections (`src/content/blog/`)
 - **Styling:** Vanilla CSS (`src/styles/global.css`)
-- **Navigation:** Scoped text-only chronological post-to-post routing layout (`PostNavigation.astro`)
+- **Navigation:** Scoped text-only chronological post-to-post routing layout (`PostNavigation.astro`) and multi-part article series table of contents (`SeriesIndex.astro`)
 - **Syntax Highlighting:** Shiki (Custom dual-tone `purity-void` theme)
 - **Linting & Formatting:** ESLint + Prettier, enforced via Husky pre-commit hooks
 
@@ -20,7 +20,7 @@ The site enforces a ruthless, content-first aesthetic. It uses no UI frameworks 
 - **Typography & Contrast:** High-contrast, monochromatic typography designed to prevent optical eye strain and halation (Light: `#1A1A1A` on `#FCFCFA`; Dark: `#EAEAEA` on `#121212`). Meets WCAG AA contrast ratio standards.
 - **Theme Modes:** Native system preferences auto-detection with a mechanical monospace manual selector switch override (`Theme: [ Light ] / Dark` / `Theme: Light / [ Dark ]`) in the navigation header.
 - **Whitespace:** Mathematical rhythm (`64px`, `96px`, `128px`).
-- **Structure:** A single, centralized `800px` content column framed by a solid structural spine (`border-left: 4px solid var(--accent-action)`). The crimson spine remains unchanged. Chronological previous/next post-to-post navigation sits raw and text-only at the bottom of blog pages, adapting dynamically to viewport scaling.
+- **Structure:** A single, centralized `800px` content column framed by a solid structural spine (`border-left: 4px solid var(--accent-action)`). The crimson spine remains unchanged. Chronological previous/next post-to-post navigation sits raw and text-only at the bottom of blog pages. Multi-part article series table of contents links render inline or as a flush-left vertical stack depending on length, using bracketed monospace representations for the current article.
 - **Accessibility:** Fully semantic DOM (Header, Main, Footer, Article) with visually-hidden skip links, keyboard focus styles, and live ARIA regions for interactive components.
 
 ## 🚀 Getting Started
