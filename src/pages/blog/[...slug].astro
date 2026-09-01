@@ -1,11 +1,14 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { render } from 'astro:content';
+import { getPublishedPosts } from '../../utils/posts';
 import PostLayout from '../../layouts/PostLayout.astro';
 import CodeBlock from '../../components/CodeBlock.astro';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
-  const sortedPosts = [...posts].sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
+  const posts = await getPublishedPosts();
+  const sortedPosts = [...posts].sort(
+    (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf(),
+  );
   return sortedPosts.map((post, index) => {
     const prev =
       index > 0
@@ -48,6 +51,13 @@ const { post, prev, next, series } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<PostLayout title={post.data.title} date={post.data.date} prev={prev} next={next} series={series}>
+<PostLayout
+  title={post.data.title}
+  pubDate={post.data.pubDate}
+  updatedDate={post.data.updatedDate}
+  prev={prev}
+  next={next}
+  series={series}
+>
   <Content components={{ pre: CodeBlock }} />
 </PostLayout>

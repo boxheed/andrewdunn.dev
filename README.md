@@ -57,12 +57,17 @@ To create a new post, add an `.mdx` file to the `src/content/blog/` directory wi
 ```mdx
 ---
 title: 'My Engineering Post'
-date: 2026-08-28
+pubDate: 2026-08-28
+updatedDate: 2026-08-29
 description: 'A brief summary of the post'
 ---
 
 Your content goes here...
 ```
+
+### Scheduled Publishing
+
+Posts with a future `pubDate` are automatically filtered out during production builds on `main`, but remain visible and reviewable in local development (`npm run dev`) and Cloudflare Pages preview branch deployments. A daily GitHub Action (`.github/workflows/scheduled-build.yml`) runs at 00:00 UTC to recompile and publish matured posts.
 
 Any code blocks written in standard markdown fence syntax (` ```bash `) will automatically be intercepted by the MDX pipeline, syntax-highlighted by Shiki, and wrapped with an accessible "Copy to Clipboard" component.
 

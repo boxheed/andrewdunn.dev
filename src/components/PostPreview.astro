@@ -2,11 +2,11 @@
 // PostPreview.astro
 interface Props {
   title: string;
-  date: Date;
+  pubDate: Date;
   slug: string;
 }
 
-const { title, date, slug } = Astro.props;
+const { title, pubDate, slug } = Astro.props;
 ---
 
 <article style="margin-bottom: 64px;">
@@ -15,7 +15,7 @@ const { title, date, slug } = Astro.props;
       {title}
     </a>
   </h2>
-  <time datetime={date.toISOString()} style="color: var(--text-muted);">
-    {date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+  <time datetime={pubDate.toISOString()} style="color: var(--text-muted);">
+    {pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
   </time>
 </article>

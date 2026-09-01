@@ -1,15 +1,15 @@
 import rss from '@astrojs/rss';
-import { getCollection } from 'astro:content';
+import { getPublishedPosts } from '../utils/posts';
 
 export async function GET(context: any) {
-  const blog = await getCollection('blog');
+  const blog = await getPublishedPosts();
   return rss({
     title: 'Andrew Dunn',
     description: 'Engineering Blog',
     site: context.site,
     items: blog.map((post) => ({
       title: post.data.title,
-      pubDate: post.data.date,
+      pubDate: post.data.pubDate,
       description: post.data.description,
       link: `/blog/${post.id}/`,
     })),

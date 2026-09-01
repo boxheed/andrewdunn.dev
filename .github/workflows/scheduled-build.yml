@@ -1,0 +1,28 @@
+name: Scheduled Content Publish
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Run daily at 00:00 UTC
+  workflow_dispatch: # Enable manual trigger from GitHub Actions UI
+
+jobs:
+  scheduled-publish:
+    name: Trigger Cloudflare Pages Deploy Hook
+    runs-on: ubuntu-latest
+
+    steps:
+      # Triggers a build & deployment on Cloudflare Pages via Deploy Hook webhook.
+      # To set this up:
+      # 1. In Cloudflare Pages Dashboard: Settings -> Builds & deployments -> Deploy hooks -> Add deploy hook (Branch: main).
+      # 2. In GitHub Repo Settings: Secrets and variables -> Actions -> Add repository secret 'DEPLOY_HOOK_URL'.
+      - name: Trigger Cloudflare Deploy Hook
+        env:
+          DEPLOY_HOOK_URL: ${{ secrets.DEPLOY_HOOK_URL }}
+        run: |
+          if [ -n "$DEPLOY_HOOK_URL" ]; then
+            echo "Triggering Cloudflare Pages build..."
+            curl -X POST -d '{}' --fail "$DEPLOY_HOOK_URL"
+          else
+            echo "::error::DEPLOY_HOOK_URL secret is not configured in GitHub repository secrets."
+            exit 1
+          fi

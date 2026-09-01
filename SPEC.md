@@ -160,6 +160,8 @@ To maintain the mechanical rigidity of the design system under light and dark th
 │   │   ├── blog/[...slug].astro
 │   │   ├── rss.xml.ts
 │   │   └── 404.astro
+│   ├── utils/
+│   │   └── posts.ts
 │   └── styles/
 │       └── global.css
 ├── astro.config.mjs
@@ -288,3 +290,5 @@ The agent must install and configure the following infrastructure for repository
 - **Node Engine:** Add an `.nvmrc` file specifying Node v24.20.0 (to satisfy `eslint-plugin-astro` constraints) and define `engine` constraints in `package.json`.
 - **Sitemap:** Add `@astrojs/sitemap` add the integration to `astro.config.mjs`.
 - **Dependency Management:** Add `.github/dependabot.yml` configured to check for `npm` dependency updates on a weekly interval.
+- **Scheduled Publishing:** Add `.github/workflows/scheduled-build.yml` running on daily cron (`0 0 * * *`) and `workflow_dispatch` to trigger builds for matured posts.
+- **Content Schema & Publishing Gate:** Enforce `pubDate: z.coerce.date()` and optional `updatedDate` in `src/content.config.ts`, with centralized production environment filtering in `src/utils/posts.ts`.

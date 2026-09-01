@@ -6,7 +6,8 @@ import SeriesIndex from '../components/SeriesIndex.astro';
 
 interface Props {
   title: string;
-  date: Date;
+  pubDate: Date;
+  updatedDate?: Date;
   prev?: { title: string; url: string } | null;
   next?: { title: string; url: string } | null;
   series?: {
@@ -15,16 +16,34 @@ interface Props {
   } | null;
 }
 
-const { title, date, prev, next, series } = Astro.props;
+const { title, pubDate, updatedDate, prev, next, series } = Astro.props;
 ---
 
 <BaseLayout title={`${title} | Andrew Dunn`}>
   <article>
     <header style="margin-bottom: 64px;">
       <h1 class="post-title" style="margin-bottom: 1rem;">{title}</h1>
-      <time datetime={date.toISOString()} style="color: var(--text-muted); font-size: 1.125rem;">
-        {date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-      </time>
+      <div style="color: var(--text-muted); font-size: 1.125rem;">
+        <time datetime={pubDate.toISOString()}>
+          {pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </time>
+        {
+          updatedDate && (
+            <span>
+              {' '}
+              (Updated:{' '}
+              <time datetime={updatedDate.toISOString()}>
+                {updatedDate.toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </time>
+              )
+            </span>
+          )
+        }
+      </div>
     </header>
 
     {series && <SeriesIndex seriesTitle={series.title} articles={series.articles} />}
