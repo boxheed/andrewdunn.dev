@@ -1,0 +1,27 @@
+---
+title: 'Right-Sizing Spec-Driven Development'
+pubDate: 2026-09-22T00:00:00.000Z
+series:
+  id: beyond-the-vibe-engineering-rigor-in-the-age-of-agents
+  title: 'Beyond the Vibe: Engineering Rigor in the Age of Agents'
+---
+
+Once you accept that coding agents need rigid boundaries, the industry shift towards Spec-Driven Development makes complete sense. Moving the source of truth from conversational prompts to structured specifications is the logical way to keep non-deterministic models aligned.
+
+The problem is our habit of turning sensible engineering practices into bureaucracy.
+
+Early tooling in this space frequently swings from chaotic prompting straight into process paralysis. Ask an agent to adjust a component, and the framework generates separate requirements, design documents, and task breakdowns across multiple markdown files before touching any code. Instead of eliminating review fatigue, we have simply swapped reviewing code diffs for reviewing walls of repetitive documentation.
+
+Specifications do not eliminate complexity. The moment a specification tries to dictate implementation mechanics, it becomes pseudo-code, and your team is stuck maintaining the system twice. A specification should only define the boundary, the business constraints, and the acceptance criteria, leaving the implementation to the model.
+
+To keep your team from drowning in markdown, match your specification rigour to the blast radius of the change:
+
+If a change is contained within an existing module and caught by local unit tests, treat the specification as disposable. Define the requirements, let the agent generate the code, verify the diff, and move on. Committing permanent specification files for routine internal logic creates documentation debt that will rot by next sprint.
+
+You anchor a persistent specification in the repository only when an undetected misunderstanding would cause real damage. If a change introduces a shared data contract, exposes an external API, or alters core business logic, the specification must live alongside the code as an automated test contract. If the code diverges from the spec, the build fails.
+
+As for claims that engineers will soon stop looking at code and work exclusively in specifications, treat that with extreme scepticism. Because LLMs are non-deterministic, generating complex applications from scratch from pure natural language remains brittle. When production breaks at 2 AM, you are still debugging code, not markdown.
+
+At your next refinement session, establish a simple rule: if a failure at this boundary would break another team or trigger an incident, write a persistent specification. If the failure is contained, write a lightweight prompt, verify the code, and ship it.
+
+Applying this discipline to new features is relatively straightforward. The real challenge is that most enterprise software is legacy code with no existing specifications. In the final part, we will look at how to introduce this workflow to brownfield systems incrementally, without halting delivery to document an entire codebase.
