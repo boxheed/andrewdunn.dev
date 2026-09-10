@@ -1,0 +1,25 @@
+---
+title: 'Classical Patterns as Agent Guardrails'
+pubDate: 2026-09-15T00:00:00.000Z
+series:
+  id: beyond-the-vibe-engineering-rigor-in-the-age-of-agents
+  title: 'Beyond the Vibe: Engineering Rigor in the Age of Agents'
+---
+
+Prompt engineering was never going to solve software architecture. The idea that you can steer an autonomous agent through complex domain logic by tweaking adjectives in a prompt ignores thirty years of engineering discipline.
+
+Coding agents fail in production because they optimise for local syntactic probability. Without rigid boundaries, they quietly violate system contracts, invent redundant abstractions, and blur domain perimeters.
+
+We solved this coordination problem decades ago. Classical architectural patterns were never academic rituals; they were practical boundaries designed to stop human teams from building unmaintainable tangles. In an agentic workflow, they become machine-enforceable guardrails that stop non-deterministic models from drifting.
+
+Programming to an interface was never just an object-oriented preference; it was an isolation mechanism. For a coding agent, an explicit interface acts as an unyielding fence. Describe a feature in natural language, and the agent must guess at data shapes and error structures. Multiple agents working in parallel will guess independently and diverge. Locking down a typed contract first—using TypeScript interfaces, Protocol Buffers, or OpenAPI schemas—eliminates the guesswork. The interface defines the perimeter. If the model breaches it, the compiler breaks, and the feedback loop is immediate.
+
+Prompts are soft constraints. Because LLMs generate the most statistically probable continuation of text, an agent facing an ambiguous edge case will invent a workaround rather than stop to ask questions. Applying Design by Contract principles replaces polite suggestions with binary constraints: strict preconditions on inputs, verifiable postconditions on outputs, and non-negotiable system invariants that fail the build if breached. Codified as automated test assertions rather than text in a prompt, these act as mechanical quality gates. The agent does not need architectural intuition; it simply needs to satisfy the contract in CI.
+
+Flooding an LLM’s context window with an entire repository degrades reasoning and increases hallucinated shortcuts. Precision always beats volume. Instead of running open-ended sessions, decompose the work into a discrete pipeline where contract definition, scoped implementation, and verification happen in isolation. The implementation agent receives only the specific contract and immediate dependencies needed for that atomic task.
+
+To capture the speed of AI without accumulating architectural decay, enforce one practical rule: separate the contract from the implementation.
+
+The engineer defines and commits the boundary first. Once the interface, schema, or invariant tests are locked into the repository, unleash the agent to write the code. Never allow an agent to author both the boundary and the code in the same session. When an agent defines both, it will inevitably adjust the contract to fit its own shortcuts—effectively marking its own homework. Decoupling them ensures human intent remains the authority, while the agent provides the raw generation horsepower within safe limits.
+
+Operationalising this seperation across teams is why Spec-Driven Development is gaining traction, but formalising specs introduces its own friction: the risk of trading code review fatigue for bureaucratic documentation bloat. In Part 3, we will look at how to implement Spec-Driven Development pragmatically, matching specification rigour to the actual risk of the change.
