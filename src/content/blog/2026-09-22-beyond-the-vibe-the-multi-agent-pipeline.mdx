@@ -1,0 +1,27 @@
+---
+title: 'The Multi-Agent Pipeline'
+pubDate: 2026-09-22T00:00:00.000Z
+series:
+  id: beyond-the-vibe-engineering-rigor-in-the-age-of-agents
+  title: 'Beyond the Vibe: Engineering Rigor in the Age of Agents'
+---
+
+We have all watched it happen. You feed an agent a detailed brief in a chat window, and for the first three turns, it looks brilliant. Then, around turn eight, it quietly forgets a constraint from turn one, renames an established database column, and writes a test that passes only because it mocked out its own mistake.
+
+The monolithic prompt is the agentic equivalent of the Big Ball of Mud. Asking a single model in a single session to interpret business requirements, design the structure, write the code, and verify its own work is asking for fragile software. The context degrades, hallucinations compound, and the model ends up marking its own homework.
+
+Autonomous development does not fail because models lack reasoning. It fails because we abandon basic system decomposition.
+
+Instead of treating an agent as a conversational partner, you have to treat it like a pipeline: discrete, single-purpose stages with strict input and output boundaries.
+
+The first stage is planning and contract definition. You use a high-reasoning model, feed it the scoped business intent and the relevant boundary schemas, and ask it for one thing: a proposed contract and acceptance criteria. It does not touch implementation code. This is the human checkpoint. You review the interface, adjust the types, and commit the boundary.
+
+Once that contract is locked, you pipe it into the implementation stage. This is where you hand off to faster, cheaper coding models. The implementation agent receives only the approved contract and the immediate dependencies required to build that atomic slice. It cannot touch the interface, and it cannot see the rest of the repository. Its blast radius is physically constrained by the inputs you gave it.
+
+The final stage is verification, and this is where most teams get lazy. Do not use another LLM to review the code. A non-deterministic model reviewing another non-deterministic model just produces hallucinated consensus. The verification gate must be mechanical: compilers, linters, and contract test suites. If the code breaks the contract, the stack trace is piped back to the implementation agent as a fresh, bounded input for a second attempt.
+
+The pipeline does not magically make agents flawless. What it does is isolate failure. When a conversational session breaks down, the entire transcript is poisoned and you have to start over. In a pipeline, if an implementation attempt fails, your plan and your contract are still intact. You are simply running another bounded build.
+
+Orchestration is not a prompt trick. It is basic engineering decomposition applied to autonomous execution.
+
+With execution broken into verifiable stages, the next problem is governance: how do we define the specifications that feed these pipelines without burying our teams in documentation? In Part 4, we will look at the failure modes of Spec-Driven Development and how to right-size specification rigour.

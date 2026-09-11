@@ -1,0 +1,25 @@
+---
+title: 'The Senior Engineer’s Real Role'
+pubDate: 2026-10-06T00:00:00.000Z
+series:
+  id: beyond-the-vibe-engineering-rigor-in-the-age-of-agents
+  title: 'Beyond the Vibe: Engineering Rigor in the Age of Agents'
+---
+
+The panic over AI coding agents replacing senior engineers rests on a basic error: confusing the mechanics of typing with the responsibility of delivery. If a career was built purely on memorising syntax, churning out boilerplate endpoints, or racing through routine tickets, that work is gone. 
+
+Typing syntax was never where the value lived. It was just the operational bottleneck.
+
+When generating code becomes virtually free, the real bottleneck shifts downstream. Fast code generation does not reduce system complexity; it multiplies it. An unguided model will produce a thousand lines of plausible, cleanly formatted code that passes local tests while quietly corrupting your state management, introducing circular dependencies, or leaking sensitive data across boundaries.
+
+The senior engineer’s job is no longer producing lines of code. It is managing the blast radius of systems that generate them.
+
+That responsibility changes how you spend your week. You stop writing routine feature logic and focus entirely on the boundaries: defining the typed schemas, establishing invariant test suites, and designing the pipelines that keep autonomous agents contained. You decide where a system demands an unyielding, compile-time contract, and where an ephemeral prompt is sufficient. 
+
+More importantly, you become the system's verification architect. Models cannot assess global risk or evaluate their own omissions. Building the deterministic harness (the compilers, contract tests, and integration environments that mechanically validate generated output) is the only thing that makes agentic velocity sustainable in production.
+
+When an agent produces garbage, the failure belongs to the harness, not the model. 
+
+The widespread adoption of AI agents does not make engineering experience obsolete. It makes poor architecture catastrophic far faster. Teams relying on unstructured prompts will bury themselves under mountains of synthetic debt. Teams grounded in classical patterns, modular isolation, and rigorous verification will deliver reliable software at speeds we could not have managed five years ago.
+
+Writing code is cheap. Designing the boundaries, owning the operational risk, and verifying the result is still the job.

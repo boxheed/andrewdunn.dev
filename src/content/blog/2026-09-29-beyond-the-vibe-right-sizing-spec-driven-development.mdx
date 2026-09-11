@@ -1,6 +1,6 @@
 ---
 title: 'Right-Sizing Spec-Driven Development'
-pubDate: 2026-09-22T00:00:00.000Z
+pubDate: 2026-09-29T00:00:00.000Z
 series:
   id: beyond-the-vibe-engineering-rigor-in-the-age-of-agents
   title: 'Beyond the Vibe: Engineering Rigor in the Age of Agents'
@@ -14,7 +14,7 @@ Early tooling in this space frequently swings from chaotic prompting straight in
 
 Specifications do not eliminate complexity. The moment a specification tries to dictate implementation mechanics, it becomes pseudo-code, and your team is stuck maintaining the system twice. A specification should only define the boundary, the business constraints, and the acceptance criteria, leaving the implementation to the model.
 
-To keep your team from drowning in markdown, match your specification rigour to the blast radius of the change:
+To keep your team from drowning in markdown, match specification rigour to the blast radius of the change:
 
 If a change is contained within an existing module and caught by local unit tests, treat the specification as disposable. Define the requirements, let the agent generate the code, verify the diff, and move on. Committing permanent specification files for routine internal logic creates documentation debt that will rot by next sprint.
 
@@ -24,4 +24,4 @@ As for claims that engineers will soon stop looking at code and work exclusively
 
 At your next refinement session, establish a simple rule: if a failure at this boundary would break another team or trigger an incident, write a persistent specification. If the failure is contained, write a lightweight prompt, verify the code, and ship it.
 
-Applying this discipline to new features is relatively straightforward. The real challenge is that most enterprise software is legacy code with no existing specifications. In the final part, we will look at how to introduce this workflow to brownfield systems incrementally, without halting delivery to document an entire codebase.
+Calibrating this balance between velocity and constraint cannot be delegated to an agent. In the final part, we will examine the senior engineer's real role: moving away from typing syntax to designing the verification harnesses and behavioural contracts that make autonomous development possible.
