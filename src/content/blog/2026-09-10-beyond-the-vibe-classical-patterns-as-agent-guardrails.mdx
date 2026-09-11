@@ -1,6 +1,6 @@
 ---
 title: 'Classical Patterns as Agent Guardrails'
-pubDate: 2026-09-15T00:00:00.000Z
+pubDate: 2026-09-10T00:00:00.000Z
 series:
   id: beyond-the-vibe-engineering-rigor-in-the-age-of-agents
   title: 'Beyond the Vibe: Engineering Rigor in the Age of Agents'
@@ -20,6 +20,6 @@ Flooding an LLM’s context window with an entire repository degrades reasoning 
 
 To capture the speed of AI without accumulating architectural decay, enforce one practical rule: separate the contract from the implementation.
 
-The engineer defines and commits the boundary first. Once the interface, schema, or invariant tests are locked into the repository, unleash the agent to write the code. Never allow an agent to author both the boundary and the code in the same session. When an agent defines both, it will inevitably adjust the contract to fit its own shortcuts; effectively marking its own homework. Decoupling them ensures human intent remains the authority, while the agent provides the raw generation horsepower within safe limits.
+The engineer defines and commits the boundary first. Once the interface, schema, or invariant tests are locked into the repository, unleash the agent to write the code. Never allow an agent to author both the boundary and the code in the same session. When an agent defines both, it will inevitably adjust the contract to fit its own shortcuts, effectively marking its own homework. Decoupling them ensures human intent remains the authority, while the agent provides raw generation horsepower within safe limits.
 
 Operationalising this separation across teams requires orchestration. In Part 3, we will look at how classical decomposition and pipeline patterns turn chaotic chat sessions into reliable multi-agent workflows.
