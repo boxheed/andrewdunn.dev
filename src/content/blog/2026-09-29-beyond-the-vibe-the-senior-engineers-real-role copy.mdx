@@ -9,24 +9,25 @@ series:
 This post is the first in a three-part series reflecting on over a decade of writing open-source Gradle plugins. It explores the technical philosophy of applying the concept of "emptiness" (where a functional tool simply does its job without getting in the way) to backend build engineering.
 
 ## The Strategic Importance of Declarative Builds
+
 It is a common scenario in almost every engineering team. The build script is treated as an afterthought. It slowly morphs into a dumping ground for imperative logic, quick fixes, and copy-pasted configuration dragged over from previous projects.
 
 We need to stop treating build files as auxiliary utilities. A cluttered build file increases cognitive load and guarantees variance across different projects. Regardless of your specific job title, if you are committing code, you own the pipeline. A minimalist, declarative build file signals that a project’s infrastructure is managed with the exact same rigor as its business logic. The objective is to declare what the build should achieve, not to write a procedural script detailing every minor step.
 
 ## The Pater Pattern: Inherited Intelligence
 
-The evolution of build systems has long moved beyond the rigid inheritance models of Maven’s parent-POM. Modern systems favor flexible, classpath-based approaches. The gradle-pater-build-plugin facilitates this by allowing build logic to be distributed via versioned JAR files. By packaging build scripts within a JAR and including that JAR on the buildscript classpath, the plugin automatically discovers and applies the logic.  
+The evolution of build systems has long moved beyond the rigid inheritance models of Maven’s parent-POM. Modern systems favor flexible, classpath-based approaches. The gradle-pater-build-plugin facilitates this by allowing build logic to be distributed via versioned JAR files. By packaging build scripts within a JAR and including that JAR on the buildscript classpath, the plugin automatically discovers and applies the logic.
 
-The real architectural advantage here is a determinate application order. The plugin guarantees that scripts are sorted and applied predictably. This solves a very real problem in shared build logic. It ensures that foundational rules are securely established before more specific, project-level configurations are layered on top, entirely eliminating the unpredictable behavior found in heavily customized build files.  
+The real architectural advantage here is a determinate application order. The plugin guarantees that scripts are sorted and applied predictably. This solves a very real problem in shared build logic. It ensures that foundational rules are securely established before more specific, project-level configurations are layered on top, entirely eliminating the unpredictable behavior found in heavily customized build files.
 
 ## Directory Geometry: Programmatic Layouts
 
-Standardising the physical structure of a project is essential for predictability. While many teams rely on manual directory creation or external scaffolding tools, the gradle-layout-plugin introduces a programmatic approach to project geometry. Through a single task, the physical layout is defined directly within the build. Crucially, this includes the ability to specify file content, allowing for the instantiation of standard stubs like README files or version manifests.  
+Standardising the physical structure of a project is essential for predictability. While many teams rely on manual directory creation or external scaffolding tools, the gradle-layout-plugin introduces a programmatic approach to project geometry. Through a single task, the physical layout is defined directly within the build. Crucially, this includes the ability to specify file content, allowing for the instantiation of standard stubs like README files or version manifests.
 
 This geometric approach to structure is further enhanced by tools like the gradle-gitignore-plugin. While the layout plugin manages the physical scaffolding, the gitignore plugin allows you to define ignore patterns programmatically, even pulling remote configurations via a URL. Together, they template standard stubs and enforce absolute consistency across the workspace.
 
 ## Standardising the Opinion: The Fizzpod Framework
 
-The culmination of this minimalist philosophy is the gradle-plugin-opinion layer. This framework enforces standard defaults for plugin development within the com.fizzpod ecosystem. It is vital to note that this is a disciplined, internal-use library rather than a general-purpose utility. By utilising the Pater pattern, it abstracts away the boilerplate of plugin application. This ensures that the build script remains a clean, high-level declaration of intent.  
+The culmination of this minimalist philosophy is the gradle-plugin-opinion layer. This framework enforces standard defaults for plugin development within the com.fizzpod ecosystem. It is vital to note that this is a disciplined, internal-use library rather than a general-purpose utility. By utilising the Pater pattern, it abstracts away the boilerplate of plugin application. This ensures that the build script remains a clean, high-level declaration of intent.
 
 However, maintaining this structure relies entirely on the enforcement of robust boundaries to protect it from environmental variance. We will explore exactly how to enforce those boundaries in the next article.
