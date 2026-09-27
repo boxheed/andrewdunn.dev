@@ -126,13 +126,28 @@ To maintain the mechanical rigidity of the design system under light and dark th
   - Current post rendered as raw text wrapped in monospace brackets (e.g. `[ 02. Typography ]`) with `aria-current="page"`. No `<a>` tag.
   - Inactive posts rendered as standard anchor tags (e.g. `<a href="...">01. The Spine</a>`).
 - **Scalability Logic:**
-  - Starts with the header line `Series: {seriesTitle}`.
+  - Starts with the header line `Series: {seriesTitle}`. If `seriesId` is provided, `{seriesTitle}` renders as an active link to the Series Landing Hub at `/series/{seriesId}`.
   - Inline layout (articles length <= 3): Render items inline, separated by raw slash (`/`) wrapped in `aria-hidden="true"`.
   - Stack layout (articles length > 3): Render items vertically in a column stack, removing the slash separators.
 - **Data Contract:**
-  - Accepts `seriesTitle` (string) and `articles` (`Array<{ title, url, isCurrent }>`).
+  - Accepts `seriesTitle` (string), optional `seriesId` (string), and `articles` (`Array<{ title, url, isCurrent }>`).
 
-## 7. File & Directory Structure
+## 7. Series Landing Hub Specification
+
+- **File Path:** `src/pages/series/[id].astro` [NEW].
+- **Architecture & Routing:**
+  - Dynamic route generated via `getStaticPaths()` grouping all published posts from `getPublishedPosts()` by `post.data.series.id`.
+  - Sorts installments by explicit `series.order` if present, falling back to chronological `pubDate` ascending.
+  - Calculates cumulative telemetry: total parts count, completion state, and estimated total reading time.
+- **UI/Styling Constraints (Purity & Void):**
+  - Category label: Monospace `SERIES ARCHIVE` in `var(--text-muted)`.
+  - Hero Scale Title: `clamp(2rem, 5vw, 3.5rem)` in `var(--text-primary)`.
+  - Monospace Telemetry Strip: `[ XX Parts ] / [ Complete ] / ~XX min total read`.
+  - Abstract / Thesis: Lead paragraph rendered if defined in `post.data.series.description`.
+  - Syllabus Grid: Flush left zero-padded index (`01.`, `02.`), post title link with standard geometric underline shift, publication date, reading time, and description snippet.
+  - Responsive Layout: Desktop renders two-column index + body cluster; mobile viewports (`< 640px`) stack vertically.
+
+## 8. File & Directory Structure
 
 ```
 ├── public/
@@ -158,6 +173,7 @@ To maintain the mechanical rigidity of the design system under light and dark th
 │   ├── pages/
 │   │   ├── index.astro
 │   │   ├── blog/[...slug].astro
+│   │   ├── series/[id].astro
 │   │   ├── rss.xml.ts
 │   │   └── 404.astro
 │   ├── utils/
@@ -169,7 +185,7 @@ To maintain the mechanical rigidity of the design system under light and dark th
 └── tsconfig.json
 ```
 
-## 8. CSS Baseline (src/styles/global.css)
+## 9. CSS Baseline (src/styles/global.css)
 
 The agent must generate the global stylesheet using exactly these foundational rules:
 
@@ -278,7 +294,7 @@ img {
 }
 ```
 
-## 9. Project Governance & Tooling
+## 10. Project Governance & Tooling
 
 The agent must install and configure the following infrastructure for repository governance:
 

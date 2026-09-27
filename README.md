@@ -9,7 +9,7 @@ Built with **Astro 7.x** and **MDX**, this site eschews modern bloat in favor of
 - **Framework:** Astro 7.x (Static Site Generation)
 - **Content:** MDX via Astro Content Collections (`src/content/blog/`)
 - **Styling:** Vanilla CSS (`src/styles/global.css`)
-- **Navigation:** Scoped text-only chronological post-to-post routing layout (`PostNavigation.astro`) and multi-part article series table of contents (`SeriesIndex.astro`)
+- **Navigation:** Scoped text-only chronological post-to-post routing layout (`PostNavigation.astro`), in-article series table of contents (`SeriesIndex.astro`), and automated Series Landing Hubs (`/series/[id]`)
 - **Syntax Highlighting:** Shiki (Custom dual-tone `purity-void` theme)
 - **Linting & Formatting:** ESLint + Prettier, enforced via Husky pre-commit hooks
 
@@ -64,6 +64,26 @@ description: 'A brief summary of the post'
 
 Your content goes here...
 ```
+
+### Multi-Part Series & Landing Hubs
+
+To link articles together into a cohesive series, add the `series` object to the frontmatter:
+
+```mdx
+---
+title: 'The Architecture of the Empty Build Script'
+pubDate: 2026-09-29
+description: 'Why minimalist build files eliminate cognitive load.'
+series:
+  id: architectural-integrity-in-modern-builds
+  title: 'Architectural Integrity in Modern Builds'
+  order: 1 # Optional sequence number (falls back to pubDate)
+  description: 'An architectural framework for deterministic builds.' # Optional series abstract
+---
+```
+
+- **In-Article Index:** Individual articles render the series navigation bar at the top ([`SeriesIndex.astro`](file:///workspace/src/components/SeriesIndex.astro)), highlighting the active article. The series header links directly to the landing hub.
+- **Automated Series Hub:** Each unique `series.id` automatically generates a dedicated landing page at `/series/[id]` (e.g. `/series/architectural-integrity-in-modern-builds`). The hub aggregates total reading time, displays a completion status badge, and presents a sequenced curriculum linking to all published installments.
 
 ### Scheduled Publishing
 

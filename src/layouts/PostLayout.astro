@@ -11,6 +11,7 @@ interface Props {
   prev?: { title: string; url: string } | null;
   next?: { title: string; url: string } | null;
   series?: {
+    id?: string;
     title: string;
     articles: Array<{ title: string; url: string; isCurrent: boolean }>;
   } | null;
@@ -46,7 +47,11 @@ const { title, pubDate, updatedDate, prev, next, series } = Astro.props;
       </div>
     </header>
 
-    {series && <SeriesIndex seriesTitle={series.title} articles={series.articles} />}
+    {
+      series && (
+        <SeriesIndex seriesId={series.id} seriesTitle={series.title} articles={series.articles} />
+      )
+    }
 
     <div class="post-content">
       <slot />

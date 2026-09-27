@@ -8,10 +8,11 @@ interface Article {
 
 interface Props {
   seriesTitle: string;
+  seriesId?: string;
   articles: Article[];
 }
 
-const { seriesTitle, articles } = Astro.props;
+const { seriesTitle, seriesId, articles } = Astro.props;
 
 const formatIndex = (index: number) => String(index + 1).padStart(2, '0');
 ---
@@ -19,7 +20,16 @@ const formatIndex = (index: number) => String(index + 1).padStart(2, '0');
 {
   articles && articles.length > 0 && (
     <div class="series-index">
-      <div class="series-header">Series: {seriesTitle}</div>
+      <div class="series-header">
+        Series:{' '}
+        {seriesId ? (
+          <a href={`/series/${seriesId}`} class="series-header-link">
+            {seriesTitle}
+          </a>
+        ) : (
+          seriesTitle
+        )}
+      </div>
       <div class={articles.length <= 3 ? 'series-inline' : 'series-stack'}>
         {articles.map((art, index) => {
           const paddedIndex = formatIndex(index);
@@ -86,14 +96,16 @@ const formatIndex = (index: number) => String(index + 1).padStart(2, '0');
     align-items: center;
   }
 
-  .series-link {
+  .series-link,
+  .series-header-link {
     color: var(--text-primary);
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 4px;
   }
 
-  .series-link:hover {
+  .series-link:hover,
+  .series-header-link:hover {
     text-decoration-thickness: 2px;
   }
 
