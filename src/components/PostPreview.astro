@@ -23,28 +23,31 @@ const seriesTitle = series?.title ?? series?.series_title;
 const seriesSlug = series?.id ?? series?.series_slug ?? series?.slug;
 const partNumber = series?.order ?? series?.series_part;
 const hasSeries = Boolean(series && seriesTitle && seriesSlug);
+const formattedDate = pubDate.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
 ---
 
-<article style="margin-bottom: 64px;">
-  {
-    hasSeries && (
-      <div class="post-kicker">
-        <a href={`/series/${seriesSlug}/`}>{seriesTitle}</a>
-        {partNumber !== undefined && (
-          <>
-            <span class="kicker-sep">·</span>
-            <span>Part {partNumber}</span>
-          </>
-        )}
-      </div>
-    )
-  }
-  <h2 style="margin-bottom: 0.5rem;">
-    <a href={`/blog/${slug}`}>
-      {title}
-    </a>
+<article class="post-entry">
+  <h2 class="post-title">
+    <a href={`/blog/${slug}`}>{title}</a>
   </h2>
-  <time datetime={pubDate.toISOString()} style="color: var(--text-muted);">
-    {pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-  </time>
+  <div class="post-meta">
+    <time datetime={pubDate.toISOString()}>{formattedDate}</time>
+    {
+      hasSeries && (
+        <>
+          <span class="meta-sep" aria-hidden="true">
+            ·
+          </span>
+          <a href={`/series/${seriesSlug}/`} class="meta-series">
+            {seriesTitle}
+            {partNumber !== undefined ? `, Part ${partNumber}` : ''}
+          </a>
+        </>
+      )
+    }
+  </div>
 </article>
