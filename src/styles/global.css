@@ -2,6 +2,7 @@
   --bg-void: #fcfcfa;
   --text-primary: #1a1a1a;
   --text-muted: #595959;
+  --color-text-secondary: var(--text-muted);
   --accent-action: #c10016;
   --code-bg: #f0f0ee;
   --code-line-num: #767676;
@@ -13,6 +14,7 @@
   --bg-void: #121212;
   --text-primary: #eaeaea;
   --text-muted: #8c8c8c;
+  --color-text-secondary: var(--text-muted);
   --code-bg: #1e1e1e;
   --code-line-num: #8c8c8c;
 }
@@ -70,12 +72,24 @@ html {
   top: 1rem;
 }
 
-h1.hero-title {
+.masthead {
+  margin-bottom: 3.5rem;
+}
+
+h1.hero-title,
+.masthead h1 {
   font-size: clamp(2.5rem, 7vw, 5.5rem);
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 1.05;
   color: var(--text-primary);
+}
+
+.masthead-deck {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary, var(--text-muted));
+  margin-top: 0.75rem;
 }
 
 h2 {

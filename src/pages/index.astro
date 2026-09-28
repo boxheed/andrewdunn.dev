@@ -7,7 +7,10 @@ const posts = await getPublishedPosts();
 ---
 
 <BaseLayout title="Andrew Dunn">
-  <h1 class="hero-title" style="margin-top: 64px; margin-bottom: 96px;">Signal.</h1>
+  <header class="masthead">
+    <h1>Andrew Dunn</h1>
+    <p class="masthead-deck">The mechanics of software delivery and production systems.</p>
+  </header>
   <div class="posts">
     {
       posts.map((post) => (
