@@ -56,6 +56,26 @@ html {
 .site-title {
   display: inline-block;
   line-height: 1.2;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.site-title:hover,
+.site-title:focus-visible {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+header[role='banner'] nav a {
+  text-decoration: none;
+}
+
+header[role='banner'] nav a:hover,
+header[role='banner'] nav a:focus-visible {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
 }
 
 .skip-link {
@@ -99,9 +119,9 @@ h1.hero-title,
 }
 
 .post-meta {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--color-text-secondary, var(--text-muted));
-  margin-top: 0.5rem;
+  margin-top: 0.45rem;
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
@@ -119,7 +139,7 @@ h1.hero-title,
   color: var(--text-primary);
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
+  text-underline-offset: 4px;
 }
 
 .meta-sep {
@@ -170,12 +190,12 @@ h2.archive-heading,
 .archive-link:focus-visible {
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
+  text-underline-offset: 4px;
 }
 
 .archive-date {
   font-family: var(--font-mono);
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   color: var(--color-text-secondary, var(--text-muted));
   font-variant-numeric: tabular-nums;
   flex-shrink: 0;
@@ -263,13 +283,40 @@ code .line::before {
 
 a {
   color: var(--text-primary);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus-visible {
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 4px;
 }
 
-a:hover,
-a:focus-visible {
+/* Article prose links (in-text citations and external references) */
+main article p a,
+main article li a,
+main article blockquote a,
+.post-content p a,
+.post-content li a,
+.post-content blockquote a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+main article p a:hover,
+main article p a:focus-visible,
+main article li a:hover,
+main article li a:focus-visible,
+main article blockquote a:hover,
+main article blockquote a:focus-visible,
+.post-content p a:hover,
+.post-content p a:focus-visible,
+.post-content li a:hover,
+.post-content li a:focus-visible,
+.post-content blockquote a:hover,
+.post-content blockquote a:focus-visible {
   text-decoration-thickness: 2px;
 }
 
@@ -324,6 +371,86 @@ html.dark #theme-btn-dark::after {
   color: var(--bg-void) !important;
 }
 
+/* Post Header */
+.post-header {
+  margin-bottom: 2.5rem;
+}
+
+.post-header:has(+ .series-rail) {
+  margin-bottom: 0;
+}
+
+/* Series Rail Navigation */
+.series-rail {
+  margin: 2.5rem 0 3rem 0;
+  padding: 0;
+  border: none;
+  background: none;
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.series-rail-header {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-text-secondary, var(--text-muted));
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+}
+
+.series-rail-title {
+  color: inherit;
+  text-decoration: none;
+}
+
+.series-rail-title:hover,
+.series-rail-title:focus-visible {
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.series-rail-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.series-rail-item {
+  padding: 0.2rem 0;
+}
+
+.series-rail-link {
+  color: var(--color-text-secondary, var(--text-muted));
+  text-decoration: none;
+}
+
+.series-rail-link:hover,
+.series-rail-link:focus-visible {
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.series-rail-current {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.part-num {
+  font-family: var(--font-mono);
+}
+
 /* Footer */
 .site-footer {
   margin-top: 6rem;
@@ -356,7 +483,7 @@ html.dark #theme-btn-dark::after {
   color: var(--text-primary);
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
+  text-underline-offset: 4px;
 }
 
 .footer-copy {

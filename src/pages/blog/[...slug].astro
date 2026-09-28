@@ -39,10 +39,11 @@ export async function getStaticPaths() {
               (a.data.series?.order ?? 0) - (b.data.series?.order ?? 0) ||
               a.data.pubDate.valueOf() - b.data.pubDate.valueOf(),
           )
-          .map((p) => ({
+          .map((p, index) => ({
             title: p.data.title,
             url: `/blog/${p.id}`,
             isCurrent: p.id === post.id,
+            partNum: p.data.series?.order ?? index + 1,
           })),
       };
     }

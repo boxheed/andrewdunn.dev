@@ -1,0 +1,53 @@
+---
+// SeriesRail.astro
+interface Article {
+  title: string;
+  url: string;
+  isCurrent: boolean;
+  partNum?: number;
+}
+
+interface Props {
+  seriesTitle: string;
+  seriesSlug: string;
+  articles: Article[];
+}
+
+const { seriesTitle, seriesSlug, articles } = Astro.props;
+const formatIndex = (index: number) => String(index).padStart(2, '0');
+---
+
+{
+  articles && articles.length > 0 && (
+    <nav class="series-rail" aria-label="Series contents">
+      <div class="series-rail-header">
+        <span class="series-rail-label">Series:</span>
+        <a href={`/series/${seriesSlug}/`} class="series-rail-title">
+          {seriesTitle}
+        </a>
+      </div>
+      <ol class="series-rail-list">
+        {articles.map((art, index) => {
+          const rawNum = art.partNum ?? index + 1;
+          const partNum = formatIndex(rawNum);
+          const isCurrent = art.isCurrent;
+          const partTitle = art.title;
+          const partUrl = art.url;
+          return (
+            <li class:list={['series-rail-item', { 'is-active': isCurrent }]}>
+              {isCurrent ? (
+                <span class="series-rail-current" aria-current="page">
+                  [ {partNum}. {partTitle} ]
+                </span>
+              ) : (
+                <a href={partUrl} class="series-rail-link">
+                  <span class="part-num">{partNum}.</span> {partTitle}
+                </a>
+              )}
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
+  )
+}

@@ -44,9 +44,7 @@ const { prev, next } = Astro.props;
 
   .nav-link {
     color: var(--text-primary);
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 4px;
+    text-decoration: none;
     font-family: var(--font-mono);
     font-size: 0.9rem;
     line-height: 1.5;
@@ -55,7 +53,9 @@ const { prev, next } = Astro.props;
 
   .nav-link:hover,
   .nav-link:focus-visible {
-    text-decoration-thickness: 2px;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
   }
 
   .prev-link {

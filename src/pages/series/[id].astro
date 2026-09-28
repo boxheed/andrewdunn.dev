@@ -42,12 +42,6 @@ export async function getStaticPaths() {
         a.data.pubDate.valueOf() - b.data.pubDate.valueOf(),
     );
 
-    const totalWords = sortedPosts.reduce((sum, p) => {
-      const words = p.body ? p.body.trim().split(/\s+/).length : 0;
-      return sum + words;
-    }, 0);
-    const totalReadMinutes = Math.max(1, Math.ceil(totalWords / 200));
-
     return {
       params: { id: series.id },
       props: {
@@ -55,7 +49,6 @@ export async function getStaticPaths() {
         seriesTitle: series.title,
         seriesDescription: series.description,
         posts: sortedPosts,
-        totalReadMinutes,
       },
     };
   });
@@ -66,18 +59,24 @@ interface Props {
   seriesTitle: string;
   seriesDescription?: string;
   posts: CollectionEntry<'blog'>[];
-  totalReadMinutes: number;
 }
 
-const { seriesTitle, seriesDescription, posts, totalReadMinutes } = Astro.props;
+const { seriesTitle, seriesDescription, posts } = Astro.props;
 
-const formatIndex = (index: number) => String(index + 1).padStart(2, '0');
-
-const getReadTime = (body?: string) => {
-  if (!body) return 1;
-  const words = body.trim().split(/\s+/).length;
-  return Math.max(1, Math.ceil(words / 200));
-};
+const sortedPosts = [...posts].sort(
+  (a, b) =>
+    new Date((a.data as any).date ?? a.data.pubDate).getTime() -
+    new Date((b.data as any).date ?? b.data.pubDate).getTime(),
+);
+const latestPost = sortedPosts[sortedPosts.length - 1];
+if (latestPost && !(latestPost.data as any).date) {
+  (latestPost.data as any).date = latestPost.data.pubDate;
+}
+const formattedLatestDate = new Intl.DateTimeFormat('en-US', {
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+}).format(new Date((latestPost.data as any).date));
 ---
 
 <BaseLayout
@@ -86,198 +85,94 @@ const getReadTime = (body?: string) => {
 >
   <div class="series-hub">
     <header class="series-header">
-      <div class="series-label">Series Archive</div>
-      <h1 class="hero-title">{seriesTitle}</h1>
+      <h1 class="post-title">{seriesTitle}</h1>
 
-      <div class="series-telemetry">
-        <span class="telemetry-badge">[ {String(posts.length).padStart(2, '0')} Parts ]</span>
-        <span class="telemetry-separator">/</span>
-        <span class="telemetry-badge">[ Complete ]</span>
-        <span class="telemetry-separator">/</span>
-        <span class="telemetry-time">~{totalReadMinutes} min total read</span>
+      <div class="series-meta">
+        <time datetime={new Date((latestPost.data as any).date).toISOString()}
+          >{formattedLatestDate}</time
+        >
       </div>
-
-      {seriesDescription && <p class="series-abstract">{seriesDescription}</p>}
     </header>
 
-    <section class="syllabus-section" aria-label="Series Syllabus">
-      <div class="syllabus-header">Curriculum & Reading Order</div>
-      <div class="syllabus-list">
-        {
-          posts.map((post, index) => {
-            const paddedIndex = formatIndex(index);
-            const readTime = getReadTime(post.body);
-            return (
-              <article class="syllabus-item">
-                <div class="syllabus-index" aria-hidden="true">
-                  {paddedIndex}.
-                </div>
-                <div class="syllabus-body">
-                  <h2 class="syllabus-title">
-                    <a href={`/blog/${post.id}`}>{post.data.title}</a>
-                  </h2>
-                  <div class="syllabus-meta">
-                    <time datetime={post.data.pubDate.toISOString()}>
-                      {post.data.pubDate.toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                      })}
-                    </time>
-                    <span class="meta-dot">·</span>
-                    <span>{readTime} min read</span>
-                  </div>
-                  {post.data.description && <p class="syllabus-desc">{post.data.description}</p>}
-                </div>
-              </article>
-            );
-          })
-        }
-      </div>
-    </section>
+    <div class="series-feed" role="feed" aria-label="Series chapters">
+      {
+        posts.map((post, index) => {
+          const partIndex = post.data.series?.order ?? index + 1;
+          const formattedDate = post.data.pubDate.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          });
+          return (
+            <article class="series-part-entry">
+              <h2 class="post-title">
+                <a href={`/blog/${post.id}`}>{post.data.title}</a>
+              </h2>
+              <div class="post-meta">
+                <span>Part {partIndex}</span>
+                <span class="meta-sep" aria-hidden="true">
+                  ·
+                </span>
+                <time datetime={post.data.pubDate.toISOString()}>{formattedDate}</time>
+              </div>
+            </article>
+          );
+        })
+      }
+    </div>
   </div>
 </BaseLayout>
 
 <style>
   .series-hub {
     width: 100%;
-    margin-top: 32px;
+    margin-top: 0;
   }
 
   .series-header {
-    margin-bottom: 64px;
+    margin-top: 0;
+    margin-bottom: 4rem;
   }
 
-  .series-label {
+  .series-header .post-title {
+    font-size: clamp(2.25rem, 5vw, 2.75rem);
+    line-height: 1.1;
+    margin-bottom: 0;
+  }
+
+  .series-meta {
     font-family: var(--font-mono);
     font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 1rem;
-  }
-
-  .hero-title {
-    margin-bottom: 1.5rem;
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    line-height: 1.15;
-  }
-
-  .series-telemetry {
+    color: var(--color-text-secondary, var(--text-muted));
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
     gap: 0.5rem;
-    font-family: var(--font-mono);
-    font-size: 0.95rem;
-    color: var(--text-primary);
-    margin-bottom: 2rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
   }
 
-  .telemetry-separator {
-    color: var(--text-muted);
-    user-select: none;
-  }
-
-  .telemetry-time {
-    color: var(--text-muted);
-  }
-
-  .series-abstract {
-    font-size: 1.125rem;
-    line-height: 1.75;
-    color: var(--text-primary);
-    max-width: 65ch;
-  }
-
-  .syllabus-section {
-    border-top: 1px solid var(--code-bg);
-    padding-top: 48px;
-  }
-
-  .syllabus-header {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 48px;
-  }
-
-  .syllabus-list {
+  .series-feed {
     display: flex;
     flex-direction: column;
-    gap: 48px;
   }
 
-  .syllabus-item {
-    display: flex;
-    gap: 1.5rem;
-    align-items: flex-start;
+  .series-part-entry {
+    margin-bottom: 3.5rem;
   }
 
-  .syllabus-index {
-    font-family: var(--font-mono);
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--text-muted);
-    line-height: 1.4;
-    user-select: none;
-    min-width: 2.5rem;
+  .series-part-entry:last-child {
+    margin-bottom: 0;
   }
 
-  .syllabus-body {
-    flex: 1;
+  .series-part-entry .post-title {
+    font-size: clamp(1.35rem, 3vw, 1.5rem);
+    line-height: 1.25;
+    margin-bottom: 0;
   }
 
-  .syllabus-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    line-height: 1.3;
-    margin-bottom: 0.5rem;
-  }
-
-  .syllabus-title a {
-    color: var(--text-primary);
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 4px;
-  }
-
-  .syllabus-title a:hover {
-    text-decoration-thickness: 2px;
-  }
-
-  .syllabus-meta {
-    font-family: var(--font-mono);
+  .series-part-entry .post-meta {
+    margin-top: 0.45rem;
     font-size: 0.85rem;
-    color: var(--text-muted);
-    margin-bottom: 0.75rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .meta-dot {
-    user-select: none;
-  }
-
-  .syllabus-desc {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: var(--text-primary);
-  }
-
-  @media (max-width: 640px) {
-    .syllabus-item {
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .syllabus-index {
-      font-size: 1rem;
-    }
+    color: var(--color-text-secondary, var(--text-muted));
   }
 </style>
