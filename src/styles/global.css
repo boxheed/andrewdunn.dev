@@ -3,6 +3,7 @@
   --text-primary: #1a1a1a;
   --text-muted: #595959;
   --color-text-secondary: var(--text-muted);
+  --color-border-subtle: #e5e5e3;
   --accent-action: #c10016;
   --code-bg: #f0f0ee;
   --code-line-num: #767676;
@@ -15,6 +16,7 @@
   --text-primary: #eaeaea;
   --text-muted: #8c8c8c;
   --color-text-secondary: var(--text-muted);
+  --color-border-subtle: #262626;
   --code-bg: #1e1e1e;
   --code-line-num: #8c8c8c;
 }
@@ -123,6 +125,60 @@ h1.hero-title,
 .kicker-sep {
   opacity: 0.6;
   user-select: none;
+}
+
+.archive-section {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-border-subtle, #eee);
+}
+
+h2.archive-heading,
+.archive-heading {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-secondary, var(--text-muted));
+  margin-bottom: 1.5rem;
+}
+
+.archive-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.archive-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.4rem 0;
+  margin: 0;
+}
+
+.archive-link {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.archive-link:hover,
+.archive-link:focus-visible {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.archive-date {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--color-text-secondary, var(--text-muted));
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
 }
 
 h2 {
