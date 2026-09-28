@@ -14,7 +14,12 @@ const posts = await getPublishedPosts();
   <div class="posts">
     {
       posts.map((post) => (
-        <PostPreview title={post.data.title} pubDate={post.data.pubDate} slug={post.id} />
+        <PostPreview
+          title={post.data.title}
+          pubDate={post.data.pubDate}
+          slug={post.id}
+          series={post.data.series}
+        />
       ))
     }
   </div>

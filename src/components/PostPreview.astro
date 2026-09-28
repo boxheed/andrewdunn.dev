@@ -1,15 +1,44 @@
 ---
 // PostPreview.astro
+interface SeriesInfo {
+  title?: string;
+  series_title?: string;
+  id?: string;
+  series_slug?: string;
+  slug?: string;
+  order?: number;
+  series_part?: number;
+}
+
 interface Props {
   title: string;
   pubDate: Date;
   slug: string;
+  series?: SeriesInfo;
 }
 
-const { title, pubDate, slug } = Astro.props;
+const { title, pubDate, slug, series } = Astro.props;
+
+const seriesTitle = series?.title ?? series?.series_title;
+const seriesSlug = series?.id ?? series?.series_slug ?? series?.slug;
+const partNumber = series?.order ?? series?.series_part;
+const hasSeries = Boolean(series && seriesTitle && seriesSlug);
 ---
 
 <article style="margin-bottom: 64px;">
+  {
+    hasSeries && (
+      <div class="post-kicker">
+        <a href={`/series/${seriesSlug}/`}>{seriesTitle}</a>
+        {partNumber !== undefined && (
+          <>
+            <span class="kicker-sep">·</span>
+            <span>Part {partNumber}</span>
+          </>
+        )}
+      </div>
+    )
+  }
   <h2 style="margin-bottom: 0.5rem;">
     <a href={`/blog/${slug}`}>
       {title}
