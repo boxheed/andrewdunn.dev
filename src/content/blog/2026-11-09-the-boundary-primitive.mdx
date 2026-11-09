@@ -6,7 +6,7 @@ description: "When to bypass heavy framework dependencies like Spring Boot and a
 
 # The Boundary Primitive: Why Java's Built-In HTTP Server Still Matters
 
-When production scale calls for an HTTP server, the tooling choice is well-trodden: Netty, Undertow, or a standard servlet container. But when building a lightweight CLI utility, an embedded test harness, or a local-first single-binary daemon, dragging in an enterprise framework introduces unnecessary dependency bloat and configuration friction. 
+When production scale calls for an HTTP server, the tooling choice is well-trodden: Netty, Undertow, or a standard servlet container. But when building a lightweight CLI utility, an embedded test harness, or a local-first single-binary daemon, dragging in an enterprise framework introduces unnecessary dependency bloat and configuration friction.
 
 The Java Development Kit has included a lightweight, zero-dependency HTTP server (`com.sun.net.httpserver.HttpServer`) since Java 6. While often dismissed because it lacks modern asynchronous abstractions, understanding its architectural boundaries reveals a highly effective tool for specific engineering domains.
 
@@ -16,7 +16,7 @@ Frameworks like Spring Boot have neutralised the distribution penalty of heavywe
 
 For embedded test harnesses, tools like WireMock provide mature mock servers handling request matching, fault injection, and verification. Writing custom handlers atop `HttpServer` means reinventing matching logic. The justification for using the JDK server directly is strictly when you require absolute zero external dependencies, or when you want test infrastructure expressed in pure Java without third-party stubbing DSLs.
 
-## The Operational Footprint 
+## The Operational Footprint
 
 A standard enterprise framework requires a dedicated build lifecycle to resolve transitive dependency trees and configure boot plugins. This build chain introduces maintenance overhead, where dependency updates risk breaking transitive CVE fixes.
 
@@ -35,6 +35,7 @@ The built-in JDK server uses a blocking, thread-per-connection model. Under heav
 If you are building software where high-concurrency throughput is irrelevant, blocking I/O is a simplification. There is no event loop to tune, no complex non-blocking selector logic to debug, and no external runtime dependencies to manage.
 
 ## Knowing When to Walk Away
+
 The JDK server enforces strict discipline. It lacks built-in asynchronous request handling, sophisticated routing trees, and robust filter chains.
 
 The moment your requirements drift toward complex middleware composition or high-throughput multiplexing, you have outgrown the standard library. Forcing `HttpServer` to handle those patterns means building a fragile custom framework. You step up to established tooling the moment your routing demands outpace the standard library, but you leverage the JDK when simplicity and low resource overhead take priority.
