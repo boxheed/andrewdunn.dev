@@ -1,7 +1,7 @@
 ---
-title: "Building a Personal AI Software Factory, Part 1: The Theory"
+title: 'Building a Personal AI Software Factory, Part 1: The Theory'
 pubDate: 2026-11-15T00:00:00.000Z
-description: "An overview of the concepts and patterns that underpin a personal AI software factory."
+description: 'An overview of the concepts and patterns that underpin a personal AI software factory.'
 ---
 
 # Building a Personal AI Software Factory, Part 1: The Theory
@@ -14,10 +14,10 @@ This series tests whether that same architecture works at the opposite extreme: 
 
 If "software factory" sounds like brand-new AI hype, it is worth knowing we have been trying to build one since the year before the Moon landing. Roughly every fifteen years, the phrase gets dusted off and reinvented:
 
-* 1968: Bob Bemer at GE and Hitachi's Software Works try running programming like an assembly line with statistical quality control.
-* 2004: Microsoft revives the label around model-driven frameworks, promising to stamp out applications from reusable blueprints.
-* 2017: The US Air Force's Kessel Run turns it into hardened containers, DevSecOps pipelines, and continuous compliance.
-* 2026: Coding agents arrive, and the label is back on every conference stage.
+- 1968: Bob Bemer at GE and Hitachi's Software Works try running programming like an assembly line with statistical quality control.
+- 2004: Microsoft revives the label around model-driven frameworks, promising to stamp out applications from reusable blueprints.
+- 2017: The US Air Force's Kessel Run turns it into hardened containers, DevSecOps pipelines, and continuous compliance.
+- 2026: Coding agents arrive, and the label is back on every conference stage.
 
 Every earlier wave shared the same underlying assumption: they industrialised the work around coding while leaving the coding step human. Putting an agent inside the implementation step finally broke that sixty-year assumption. Factory.ai's white paper estimates that a tenfold speed increase in writing code yields only about a 10% gain in overall delivery. Once a machine generates diffs faster than a person can read them, proving the code works becomes the main bottleneck.
 
@@ -25,10 +25,10 @@ Every earlier wave shared the same underlying assumption: they industrialised th
 
 Most developers today operate a toolbox: an agent completing code in an editor, a script summarising pull requests, and a human manually copying context between disconnected sessions. Addy Osmani defines a software factory as many harnessed loops running concurrently, fed by a queue of work and drained through a review gate into production, with humans owning the system from above.
 
-* Setpoint (Intent): Specifications, Work Orders, and acceptance criteria.
-* Controller (Agents + Harness): Coding agents and their rules, where autonomy multiplied by concurrency sets the gain.
-* Plant (Your System): The running codebase, services, and data stores.
-* Sensor (Verification): Linters, tests, runtime checks, and human code review.
+- Setpoint (Intent): Specifications, Work Orders, and acceptance criteria.
+- Controller (Agents + Harness): Coding agents and their rules, where autonomy multiplied by concurrency sets the gain.
+- Plant (Your System): The running codebase, services, and data stores.
+- Sensor (Verification): Linters, tests, runtime checks, and human code review.
 
 Turn up the gain on a control loop while leaving the sensor slow, and the system oscillates and overshoots. That is what showed up in Faros AI's 2026 data: epics completed jumped 66.2%, while incidents per pull request spiked 242.7% and weekly deployments fell. There is an obvious caveat (Faros AI sells engineering analytics and measured observational correlations rather than a controlled trial), yet their Q3 follow-up confirmed the mechanics. Even as incidents per change settled to +14.5%, pull requests merged with zero review climbed to +76.3% and time in QA jumped 300.6%. The human sensor saturated and was bypassed.
 
@@ -40,10 +40,10 @@ Paul Iusztin, who built a solo factory called Squid, puts the buy line for manag
 
 Running that on a personal laptop comes with four practical constraints:
 
-* Portability stops at the harness. Repository contracts, Devcontainer definitions, and local verification scripts transfer cleanly if you swap Antigravity for OpenCode, Pi, or Claude Code. Orchestration glue (subagent delegation, tool permissions, browser hooks) is tightly coupled to the harness and always requires rewriting.
-* Stock Devcontainers are not sandboxes. Policy in a system prompt is a suggestion; guardrails hold only at an infrastructure boundary. A default VS Code Devcontainer still inherits outbound internet access, Git credentials, and read-write repo mounts. Real containment means restricting network egress, scoping credentials, and keeping held-out acceptance scenarios outside the coding agent's write path (via read-only mounts or post-push GitHub Actions) so agents cannot rewrite tests to pass. On Windows, keeping the repo inside the WSL2 Linux filesystem also avoids the severe Docker bind-mount I/O penalty on /mnt/c/.
-* An RTX 3050 will not run your coding loop. With 4GB to 6GB of VRAM, any local model large enough to track multi-file specifications spills into system RAM and crawls. Local GPU compute is useful only for optional narrow utilities like embeddings, leaving planning and execution to cloud quotas.
-* Quotas bring discipline and ceremony. A five-hour rolling quota forces bounded Work Orders with explicit goals and definitions of done, because vague prompts trigger retry loops that burn your allowance. Even so, quotas cause mid-refactor stalls, and writing a formal Work Order and ADR for a 30-line fix takes longer than editing the file by hand. Sometimes the fastest move is to bypass the factory altogether.
+- Portability stops at the harness. Repository contracts, Devcontainer definitions, and local verification scripts transfer cleanly if you swap Antigravity for OpenCode, Pi, or Claude Code. Orchestration glue (subagent delegation, tool permissions, browser hooks) is tightly coupled to the harness and always requires rewriting.
+- Stock Devcontainers are not sandboxes. Policy in a system prompt is a suggestion; guardrails hold only at an infrastructure boundary. A default VS Code Devcontainer still inherits outbound internet access, Git credentials, and read-write repo mounts. Real containment means restricting network egress, scoping credentials, and keeping held-out acceptance scenarios outside the coding agent's write path (via read-only mounts or post-push GitHub Actions) so agents cannot rewrite tests to pass. On Windows, keeping the repo inside the WSL2 Linux filesystem also avoids the severe Docker bind-mount I/O penalty on /mnt/c/.
+- An RTX 3050 will not run your coding loop. With 4GB to 6GB of VRAM, any local model large enough to track multi-file specifications spills into system RAM and crawls. Local GPU compute is useful only for optional narrow utilities like embeddings, leaving planning and execution to cloud quotas.
+- Quotas bring discipline and ceremony. A five-hour rolling quota forces bounded Work Orders with explicit goals and definitions of done, because vague prompts trigger retry loops that burn your allowance. Even so, quotas cause mid-refactor stalls, and writing a formal Work Order and ADR for a 30-line fix takes longer than editing the file by hand. Sometimes the fastest move is to bypass the factory altogether.
 
 ## Four Constraints for Part 2
 
@@ -57,22 +57,23 @@ Iusztin abandoned the first version of Squid because he chased 24/7 remote auton
 Enterprise guides recommend tracking cost per merged change and 30-day rework rate. On a flat-rate $20 subscription with opaque rolling quotas and small solo commit volumes, both metrics are too noisy to be useful. Instead, I will baseline three simpler numbers before turning the factory on: time to signal (edit to verified result), quota exhaustion rate, and the share of agent-authored pull requests that merge without manual edits. Part 2 puts these constraints to work on a real codebase.
 
 ## References
+
 ### Delivery and quality data
 
-* [DORA, 2025 State of AI-assisted Software Development](https://dora.dev/research/2025/dora-report/)
-* [Faros AI, The AI Engineering Report 2026: The AI Acceleration Whiplash (April 2026)](https://www.faros.ai/research/ai-acceleration-whiplash)
-* [Faros AI, The Speed Trap: 8 takeaways from Faros's latest AI engineering research (18 September 2026)](https://www.faros.ai/blog/ai-speed-trap-takeaways)
+- [DORA, 2025 State of AI-assisted Software Development](https://dora.dev/research/2025/dora-report/)
+- [Faros AI, The AI Engineering Report 2026: The AI Acceleration Whiplash (April 2026)](https://www.faros.ai/research/ai-acceleration-whiplash)
+- [Faros AI, The Speed Trap: 8 takeaways from Faros's latest AI engineering research (18 September 2026)](https://www.faros.ai/blog/ai-speed-trap-takeaways)
 
 ### AI software factories and control loops
 
-* [Justin McCarthy, Software Factories and the Agentic Moment](https://factory.strongdm.ai/)
-* [Dex Horthy, Harness Engineering Is Not Enough: Why Software Factories Fail (AI Engineer World's Fair, 30 June 2026)](https://www.ai.engineer/talks/Ib5GBkD555M-harness-engineering-is-not-enough-why-software)
-* [Addy Osmani, Software Factories, Light and Dark (20 July 2026)](https://addyosmani.com/blog/software-factories/)  
-* [Paul Iusztin, Inside a Software Factory (O'Reilly Radar, 4 September 2026)](https://www.oreilly.com/radar/inside-a-software-factory/)   
-* [Arjun Iyer, Software Factories: The Complete Guide for Cloud-Native Systems (Signadot, 15 October 2026)](https://www.signadot.com/software-factory/)   
-* [Factory, Software Factory: An Autonomy Maturity Model for the Enterprise (2026)](https://factory.com/software-factory-whitepaper)  
+- [Justin McCarthy, Software Factories and the Agentic Moment](https://factory.strongdm.ai/)
+- [Dex Horthy, Harness Engineering Is Not Enough: Why Software Factories Fail (AI Engineer World's Fair, 30 June 2026)](https://www.ai.engineer/talks/Ib5GBkD555M-harness-engineering-is-not-enough-why-software)
+- [Addy Osmani, Software Factories, Light and Dark (20 July 2026)](https://addyosmani.com/blog/software-factories/)
+- [Paul Iusztin, Inside a Software Factory (O'Reilly Radar, 4 September 2026)](https://www.oreilly.com/radar/inside-a-software-factory/)
+- [Arjun Iyer, Software Factories: The Complete Guide for Cloud-Native Systems (Signadot, 15 October 2026)](https://www.signadot.com/software-factory/)
+- [Factory, Software Factory: An Autonomy Maturity Model for the Enterprise (2026)](https://factory.com/software-factory-whitepaper)
 
 ### Historical context
 
-* [Michael A. Cusumano, Factory Concepts and Practices in Software Development: An Historical Overview (MIT Sloan School of Management working paper, 1989)](https://dspace.mit.edu/handle/1721.1/47992) 
-* [Jack Greenfield and Keith Short, Software Factories: Assembling Applications with Patterns, Models, Frameworks, and Tools (Wiley, 2004)](https://softwarefactories.com/TheBook.html)
+- [Michael A. Cusumano, Factory Concepts and Practices in Software Development: An Historical Overview (MIT Sloan School of Management working paper, 1989)](https://dspace.mit.edu/handle/1721.1/47992)
+- [Jack Greenfield and Keith Short, Software Factories: Assembling Applications with Patterns, Models, Frameworks, and Tools (Wiley, 2004)](https://softwarefactories.com/TheBook.html)
